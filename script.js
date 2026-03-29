@@ -60,9 +60,8 @@ function getBlackSignature(pad) {
 }
 
 function downloadPDF() {
-    // RESOLUÇÃO DE BUG MOBILE: Reseta scroll e força windowWidth
+    // FIX MOBILE: Reseta scroll e prepara imagens
     window.scrollTo(0,0);
-
     const imgAdmin = getBlackSignature(padAdmin);
     const imgTecnico = getBlackSignature(padTecnico);
     if (imgAdmin) document.getElementById('img-admin').src = imgAdmin;
@@ -70,7 +69,9 @@ function downloadPDF() {
 
     const element = document.getElementById('rat-render');
     const chamado = document.getElementById('in-chamado').value || 'S_N';
-    
+
+    // A MÁGICA: Clonamos o elemento e forçamos o tamanho de A4 (794px de largura)
+    // Isso ignora o tamanho da tela do celular na hora de renderizar o PDF
     const opt = {
         margin: 0,
         filename: 'RAT_PeixeBrabo_' + chamado + '.pdf',
@@ -79,9 +80,11 @@ function downloadPDF() {
             scale: 2, 
             useCORS: true, 
             letterRendering: true,
-            windowWidth: 800 // FORÇA O RENDERIZADOR A PENSAR QUE É UM DESKTOP (CORRIGE BUG MOBILE)
+            windowWidth: 800, // Força o motor de renderização a pensar que está num computador largo
+            scrollY: -window.scrollY 
         },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
+
     html2pdf().set(opt).from(element).save();
 }
