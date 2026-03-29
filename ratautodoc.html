@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PEIXE BRABO RATS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -21,7 +21,7 @@
                 </div>
                 <div>
                     <h2 class="text-xl font-black text-white tracking-widest uppercase">PEIXE BRABO <span class="text-red-600">RATS</span></h2>
-                    <p class="text-[8px] text-gray-500 uppercase tracking-widest">Master Protocol v4.0</p>
+                    <p class="text-[8px] text-gray-500 uppercase tracking-widest">Mobile Stable v4.5</p>
                 </div>
             </div>
             <div class="h-[1px] w-full bg-gradient-to-r from-red-600 to-transparent mt-4"></div>
@@ -101,7 +101,7 @@
             </div>
 
             <div class="tech-card">
-                <div class="tech-card-header">05. AUTENTICACAO</div>
+                <div class="tech-card-header">05. AUTENTICAÇÃO</div>
                 <div class="space-y-4 mt-4">
                     <div>
                         <label class="input-label text-red-600">ADMIN_OBRA</label>
@@ -119,7 +119,7 @@
                 </div>
             </div>
 
-            <button type="button" onclick="downloadPDF()" class="generate-btn">GERAR PDF FINAL</button>
+            <button type="button" onclick="downloadPDF()" class="generate-btn">GERAR PDF (MOBILE FIX)</button>
         </form>
     </div>
 
@@ -164,7 +164,7 @@
                     <tr class="font-bold"><td style="border-bottom: none;">Tablet:</td><td colspan="2" style="border-bottom: 1.5px solid black;"></td></tr>
                     <tr><td>Versão Atualizada</td><td class="text-[9px]">Versão: <span id="out-v-versao"></span></td><td class="text-center"><span class="check-box" id="vt-s-out"></span> SIM &nbsp; <span class="check-box" id="vt-n-out"></span> NÃO</td></tr>
                     <tr><td>Conexão com Internet</td><td class="text-[9px]">D: <span id="out-v-down"></span>Mb | U: <span id="out-v-up"></span>Mb</td><td class="text-[8px] text-center"><span id="out-3g">□</span> 3G <span id="out-4g">□</span> 4G <span id="out-wifi">□</span> WI-FI</td></tr>
-                    <tr><td>Bluetooth com Catraca</td><td></td><td class="text-center"><span class="check-box" id="vbt-s-out"></span> SIM &nbsp; <span class="check-box" id="vbt-n-out"></span> NÃO</td></tr>
+                    <tr><td>Bluetooth Catraca</td><td></td><td class="text-center"><span class="check-box" id="vbt-s-out"></span> SIM &nbsp; <span class="check-box" id="vbt-n-out"></span> NÃO</td></tr>
                     <tr><td>Registros Acesso Lib/Bloq</td><td></td><td class="text-center"><span class="check-box" id="reg-s-out"></span> SIM &nbsp; <span class="check-box" id="reg-n-out"></span> NÃO</td></tr>
                     <tr><td>Cadastro Visitante Liberação</td><td></td><td class="text-center"><span class="check-box" id="vis-s-out"></span> SIM &nbsp; <span class="check-box" id="vis-n-out"></span> NÃO</td></tr>
                     <tr><td>Outros Apps instalados</td><td class="text-[9px]">(Quais): <span id="out-v-quais"></span></td><td class="text-center"><span class="check-box" id="app-s-out"></span> SIM &nbsp; <span class="check-box" id="app-n-out"></span> NÃO</td></tr>
@@ -209,12 +209,12 @@
                     </div>
                     <div style="text-align: center; width: 34%;">
                         <div style="width: 35px; height: 35px; background-color: #cc0000; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
-                            <svg viewBox="0 0 24 24" style="width: 22px; height: 22px; fill: white;"><path d="M11 2v2h2V2h-2m-7 9h2v2H4v-2m14 0h2v2h-2v-2M11 20v2h2v-2h-2m1-15a7 7 0 0 0-7 7 7 7 0 0 0 7 7 7 7 0 0 0 7-7 7 7 0 0 0-7-7m0 2a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5z"/></svg>
+                            <svg viewBox="0 0 24 24" style="width: 22px; height: 22px; fill: white;"><path d="M11 2v2h2V2h-2m-7 9h2v2H4v-2m14 0h2v2h-2v-2M11 20v2h2v-2h-2m1-15a7 7 0 0 0-7 7 7 7 0 0 0 7 7 7 7 0 0 0 7-7 7 7 0 0 0-7-7m0 2a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5z" /></svg>
                         </div>
                         <span style="color: #cc0000; font-size: 6px; font-weight: 900; display: block;">CATRACA DE ACESSO</span>
                     </div>
                     <div style="text-align: right; width: 33%; line-height: 1;">
-                        <span style="color: blue; text-decoration: underline; font-size: 8px;">https://suporteautodoc.zendesk.com/hc/pt-br/requests/new</span><br>
+                        <span style="color: blue; text-decoration: underline; font-size: 8px;">https://suporteautodoc.zendesk.com</span><br>
                         <span style="font-size: 8px;">Brooklin – São Paulo – CEP 04582-000</span><br>
                         <span style="font-size: 9px; font-weight: 900;">(11) 5043-7900</span>
                     </div>

@@ -60,6 +60,9 @@ function getBlackSignature(pad) {
 }
 
 function downloadPDF() {
+    // RESOLUÇÃO DE BUG MOBILE: Reseta scroll e força windowWidth
+    window.scrollTo(0,0);
+
     const imgAdmin = getBlackSignature(padAdmin);
     const imgTecnico = getBlackSignature(padTecnico);
     if (imgAdmin) document.getElementById('img-admin').src = imgAdmin;
@@ -67,11 +70,17 @@ function downloadPDF() {
 
     const element = document.getElementById('rat-render');
     const chamado = document.getElementById('in-chamado').value || 'S_N';
+    
     const opt = {
         margin: 0,
         filename: 'RAT_PeixeBrabo_' + chamado + '.pdf',
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 3, useCORS: true, letterRendering: true },
+        html2canvas: { 
+            scale: 2, 
+            useCORS: true, 
+            letterRendering: true,
+            windowWidth: 800 // FORÇA O RENDERIZADOR A PENSAR QUE É UM DESKTOP (CORRIGE BUG MOBILE)
+        },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
     html2pdf().set(opt).from(element).save();
