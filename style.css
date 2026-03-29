@@ -98,7 +98,7 @@ canvas { width: 100%; height: 100%; cursor: crosshair; }
     background: white;
     color: black;
     box-sizing: border-box;
-    font-size: 9px;
+    font-size: 8.5px;
     font-family: 'Roboto', sans-serif;
     position: relative;
     box-shadow: 0 0 50px rgba(0,0,0,0.8);
@@ -120,9 +120,23 @@ canvas { width: 100%; height: 100%; cursor: crosshair; }
 .bg-gray-doc { background-color: #efefef !important; }
 .font-bold { font-weight: bold; }
 .section-title { border: 1.5px solid black; border-bottom: none; padding: 2px; font-weight: bold; text-align: center; margin-top: 5px; background: #f9f9f9; }
-.box-text-lined { border: 1.5px solid black; height: 100px; width: 100%; background-image: linear-gradient(#ccc 1px, transparent 1px); background-size: 100% 18px; line-height: 18px; padding: 0 5px; white-space: pre-wrap; margin-bottom: 0; }
+
+.box-text-lined {
+    border: 1.5px solid black;
+    flex-grow: 1;
+    min-height: 80px;
+    width: 100%;
+    background-image: linear-gradient(#ccc 1px, transparent 1px);
+    background-size: 100% 18px;
+    line-height: 18px;
+    padding: 0 5px;
+    font-size: 10px;
+    white-space: pre-wrap;
+    margin-bottom: 0;
+}
+
 .check-box { display: inline-block; width: 10px; height: 10px; border: 1px solid black; text-align: center; line-height: 9px; font-size: 9px; font-weight: bold; }
-.preview-signature { max-height: 38px; position: absolute; left: 60px; bottom: 5px; pointer-events: none; }
+.preview-signature { max-height: 40px; position: absolute; left: 60px; bottom: 5px; pointer-events: none; }
 
 .doc-table tr.font-bold td:first-child { border-right: none !important; }
 .doc-table tr.font-bold td:last-child { border-left: none !important; }

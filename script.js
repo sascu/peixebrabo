@@ -38,22 +38,38 @@ function setupSig(id) {
     canvas.getContext("2d").scale(ratio, ratio);
     return new SignaturePad(canvas, { 
         backgroundColor: 'rgba(255, 255, 255, 0)',
-        penColor: 'black'
+        penColor: 'white'
     });
 }
 
 const padTecnico = setupSig('pad-tecnico');
 const padAdmin = setupSig('pad-admin');
 
+function getBlackSignature(pad) {
+    if (pad.isEmpty()) return null;
+    const canvas = pad.canvas;
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = canvas.width;
+    tempCanvas.height = canvas.height;
+    const tempCtx = tempCanvas.getContext('2d');
+    tempCtx.drawImage(canvas, 0, 0);
+    tempCtx.globalCompositeOperation = 'source-in';
+    tempCtx.fillStyle = 'black';
+    tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+    return tempCanvas.toDataURL();
+}
+
 function downloadPDF() {
-    if (!padAdmin.isEmpty()) document.getElementById('img-admin').src = padAdmin.toDataURL();
-    if (!padTecnico.isEmpty()) document.getElementById('img-tecnico').src = padTecnico.toDataURL();
+    const imgAdmin = getBlackSignature(padAdmin);
+    const imgTecnico = getBlackSignature(padTecnico);
+    if (imgAdmin) document.getElementById('img-admin').src = imgAdmin;
+    if (imgTecnico) document.getElementById('img-tecnico').src = imgTecnico;
 
     const element = document.getElementById('rat-render');
     const chamado = document.getElementById('in-chamado').value || 'S_N';
     const opt = {
         margin: 0,
-        filename: 'RAT_AutoDoc_' + chamado + '.pdf',
+        filename: 'RAT_PeixeBrabo_' + chamado + '.pdf',
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 3, useCORS: true, letterRendering: true },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
