@@ -3,21 +3,49 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvasAdmin = document.getElementById('pad-admin');
     const canvasTecnico = document.getElementById('pad-tecnico');
 
-    const padAdmin = new SignaturePad(canvasAdmin, { backgroundColor: 'rgb(255, 255, 255)' });
-    const padTecnico = new SignaturePad(canvasTecnico, { backgroundColor: 'rgb(255, 255, 255)' });
+    // CONFIGURAÇÃO PARA O TÉCNICO ENXERGAR: Fundo Preto e Caneta Branca
+    const padOptions = { 
+        backgroundColor: 'rgb(0, 0, 0)', 
+        penColor: 'rgb(255, 255, 255)' 
+    };
+
+    const padAdmin = new SignaturePad(canvasAdmin, padOptions);
+    const padTecnico = new SignaturePad(canvasTecnico, padOptions);
 
     window.padAdmin = padAdmin;
     window.padTecnico = padTecnico;
 
+    // Função Mágica para inverter as cores da imagem (Preto/Branco -> Branco/Preto)
+    function getInvertedDataURL(canvas) {
+        const tempCanvas = document.createElement('canvas');
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+
+        // Desenha a assinatura original
+        tempCtx.drawImage(canvas, 0, 0);
+
+        // Inverte as cores (O que é branco vira preto, o que é preto vira branco)
+        tempCtx.globalCompositeOperation = 'difference';
+        tempCtx.fillStyle = 'white';
+        tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+        return tempCanvas.toDataURL();
+    }
+
+    // Atualiza a imagem no relatório invertendo as cores
     [padAdmin, padTecnico].forEach((pad, index) => {
         const targetImgId = index === 0 ? 'img-admin' : 'img-tecnico';
+        const canvas = index === 0 ? canvasAdmin : canvasTecnico;
+
         pad.addEventListener("endStroke", () => {
-            const dataUrl = pad.toDataURL();
-            document.getElementById(targetImgId).src = dataUrl;
+            // Pegamos a assinatura (branca/preta) e convertemos para (preta/branca)
+            const invertedUrl = getInvertedDataURL(canvas);
+            document.getElementById(targetImgId).src = invertedUrl;
         });
     });
 
-    // 2. Sincronização em Tempo Real
+    // 2. Sincronização em Tempo Real (Inputs)
     const inputMappings = [
         'data', 'chamado', 'inicio', 'fim', 'cliente', 'obra', 
         'endereco', 'cidade', 'desloc', 'telefone', 'eng', 
@@ -28,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
     inputMappings.forEach(id => {
         const inputEl = document.getElementById(`in-${id}`);
         const outputEl = document.getElementById(`out-${id}`);
-        
         if (inputEl && outputEl) {
             inputEl.addEventListener('input', () => {
                 outputEl.innerText = inputEl.value;
@@ -36,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 3. Funções Globais
     window.syncCheck = function(id, checked) {
         const outEl = document.getElementById(`out-${id}`);
         if (outEl) outEl.innerText = checked ? '▣' : '□';
@@ -52,43 +78,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // 4. GERAÇÃO DE PDF OTIMIZADA PARA MOBILE
+    // 4. Geração de PDF
     window.downloadPDF = function() {
         const element = document.getElementById('rat-render');
         const numChamado = document.getElementById('in-chamado').value || '000';
-
-        // --- TRUQUE PARA MOBILE ---
-        // Forçamos a largura do elemento para 800px (tamanho ideal A4) 
-        // antes de gerar, para evitar que o celular "esprema" o layout.
         const originalWidth = element.style.width;
         element.style.width = "800px"; 
 
         const opt = {
             margin: 0,
-            filename: `RAT_${numChamado}.pdf`, // Nome alterado conforme solicitado
+            filename: `RAT_${numChamado}.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { 
-                scale: 2, // Scale 2 é suficiente para boa qualidade sem travar o celular
-                useCORS: true,
-                letterRendering: true,
-                scrollY: 0, // Evita cortes se a página estiver com scroll
-                scrollX: 0
-            },
-            jsPDF: { 
-                unit: 'mm', 
-                format: 'a4', 
-                orientation: 'portrait' 
-            }
+            html2canvas: { scale: 3, useCORS: true, letterRendering: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        // Gerar PDF
         html2pdf().set(opt).from(element).save().then(() => {
-            // Volta ao normal após gerar o PDF
             element.style.width = originalWidth;
         });
     };
 
-    // Ajuste de tamanho dos canvas
     function resizeCanvas() {
         const ratio = Math.max(window.devicePixelRatio || 1, 1);
         [canvasAdmin, canvasTecnico].forEach(canvas => {
