@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvasAdmin = document.getElementById('pad-admin');
     const canvasTecnico = document.getElementById('pad-tecnico');
 
-    // CONFIGURAÇÃO PARA O TÉCNICO ENXERGAR: Fundo Preto e Caneta Branca
+    // Configuração: Fundo Preto e Caneta Branca para facilitar a visão no celular
     const padOptions = { 
         backgroundColor: 'rgb(0, 0, 0)', 
         penColor: 'rgb(255, 255, 255)' 
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.padAdmin = padAdmin;
     window.padTecnico = padTecnico;
 
-    // Função Mágica para inverter as cores da imagem (Preto/Branco -> Branco/Preto)
+    // Função para inverter as cores da assinatura (Branco no Preto -> Preto no Branco)
     function getInvertedDataURL(canvas) {
         const tempCanvas = document.createElement('canvas');
         const tempCtx = tempCanvas.getContext('2d');
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Desenha a assinatura original
         tempCtx.drawImage(canvas, 0, 0);
 
-        // Inverte as cores (O que é branco vira preto, o que é preto vira branco)
+        // Inverte as cores
         tempCtx.globalCompositeOperation = 'difference';
         tempCtx.fillStyle = 'white';
         tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
@@ -33,19 +33,18 @@ document.addEventListener('DOMContentLoaded', () => {
         return tempCanvas.toDataURL();
     }
 
-    // Atualiza a imagem no relatório invertendo as cores
+    // Atualiza a imagem no relatório automaticamente ao terminar o traço
     [padAdmin, padTecnico].forEach((pad, index) => {
         const targetImgId = index === 0 ? 'img-admin' : 'img-tecnico';
         const canvas = index === 0 ? canvasAdmin : canvasTecnico;
 
         pad.addEventListener("endStroke", () => {
-            // Pegamos a assinatura (branca/preta) e convertemos para (preta/branca)
             const invertedUrl = getInvertedDataURL(canvas);
             document.getElementById(targetImgId).src = invertedUrl;
         });
     });
 
-    // 2. Sincronização em Tempo Real (Inputs)
+    // 2. Sincronização em Tempo Real (Inputs para o Documento)
     const inputMappings = [
         'data', 'chamado', 'inicio', 'fim', 'cliente', 'obra', 
         'endereco', 'cidade', 'desloc', 'telefone', 'eng', 
@@ -78,37 +77,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // 4. Geração de PDF
+    // 3. Geração de PDF Otimizada para Mobile
     window.downloadPDF = function() {
         const element = document.getElementById('rat-render');
         const numChamado = document.getElementById('in-chamado').value || '000';
-        const originalWidth = element.style.width;
-        element.style.width = "800px"; 
+        
+        // Bloqueia interações durante o processamento
+        const btn = document.querySelector('.generate-btn');
+        const originalText = btn.innerText;
+        btn.innerText = "PROCESSANDO...";
+        btn.disabled = true;
 
         const opt = {
             margin: 0,
             filename: `RAT_${numChamado}.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 3, useCORS: true, letterRendering: true },
+            html2canvas: { 
+                scale: 2, 
+                useCORS: true, 
+                letterRendering: true,
+                width: 794, // Largura fixa de um A4 em pixels
+                windowWidth: 794 // Força o navegador a renderizar como desktop
+            },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
-            element.style.width = originalWidth;
+            btn.innerText = originalText;
+            btn.disabled = false;
         });
     };
 
+    // Ajuste de DPI para os Canvas de Assinatura
     function resizeCanvas() {
         const ratio = Math.max(window.devicePixelRatio || 1, 1);
         [canvasAdmin, canvasTecnico].forEach(canvas => {
             canvas.width = canvas.offsetWidth * ratio;
             canvas.height = canvas.offsetHeight * ratio;
-            canvas.getContext("2d").scale(ratio, ratio);
-        });
-        padAdmin.clear();
-        padTecnico.clear();
-    }
-
-    window.onresize = resizeCanvas;
-    resizeCanvas();
-});
+            canvas.getContex
