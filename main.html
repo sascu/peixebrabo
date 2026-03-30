@@ -2,45 +2,37 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PEIXE BRABO - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PEIXE BRABO | Terminal</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Fonte de impacto para o Logo -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Efeito de linhas de scan (opcional, dá o clima hacker) -->
+    <div class="scanlines"></div>
 
-    <header>
-        <div class="logo-container">
-            <h1 class="logo-text">PEIXE <span class="highlight">BRABO</span></h1>
-            <p class="tagline">Advanced Documentation & Malware Analysis</p>
-        </div>
-    </header>
-
-    <main class="container">
-        <!-- Item Principal: Acessa a PASTA autodoc e o ARQUIVO ratautodoc.html -->
-        <section class="main-feature">
-            <a href="autodoc/ratautodoc.html" class="card featured">
-                <div class="card-icon">⚙️</div>
-                <div class="card-info">
-                    <h2>RAT AUTODOC</h2>
-                    <p>Módulo Principal de Geração e Documentação</p>
-                    <span class="status">SISTEMA ATIVO</span>
+    <div class="container">
+        <header>
+            <div class="logo-wrapper">
+                <h1 class="logo-text">PEIXE <span class="red-glitch">BRABO</span></h1>
+                <div class="status-bar">
+                    <span class="pulse"></span> SISTEMA CENTRAL OPERACIONAL
                 </div>
-            </a>
-        </section>
+            </div>
+        </header>
 
-        <hr class="divider">
-        <h3 class="section-title">MÓDULOS DETECTADOS EM /AUTODOC/</h3>
+        <main id="app-root">
+            <!-- Injetado pelo JS -->
+        </main>
 
-        <div id="rat-grid" class="grid">
-            <div class="loading">Sincronizando com diretório autodoc...</div>
-        </div>
-    </main>
-
-    <footer>
-        <p>© 2026 Desenvolvido por <a href="https://github.com/sascu" target="_blank" class="dev-link">PEIXE</a></p>
-        <p class="non-profit">Organização Sem Fins Lucrativos</p>
-        <p class="repo-info">Directory Path: <span id="repo-status">/autodoc/</span></p>
-    </footer>
+        <footer>
+            <div class="footer-content">
+                <p class="copyright">© 2026 DESENVOLVIDO POR PEIXE</p>
+                <p class="org">ORGANIZAÇÃO SEM FINS LUCRATIVOS</p>
+            </div>
+        </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>

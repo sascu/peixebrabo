@@ -1,44 +1,55 @@
-const USER = 'sascu';
-const REPO = 'peixebrabo';
-const FOLDER = 'autodoc'; 
-const API_URL = `https://api.github.com/repos/${USER}/${REPO}/contents/${FOLDER}`;
+/**
+ * NÚCLEO DE DADOS - PEIXE BRABO
+ */
+const DATA = {
+    principal: {
+        nome: "RAT AUTODOC",
+        sub: "GERADOR DE DOCUMENTAÇÃO AVANÇADO",
+        link: "autodoc/main.html",
+        data: "29/03/2026",
+        status: "SISTEMA ONLINE"
+    },
+    offline: [
+        { id: "S/N" },
+        { id: "S/N" },
+        { id: "S/N" },
+        { id: "S/N" }
+    ]
+};
 
-async function loadRepositoryFiles() {
-    const grid = document.getElementById('rat-grid');
+function renderApp() {
+    const root = document.getElementById('app-root');
     
-    try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error("Pasta não encontrada");
-        const files = await response.json();
+    // Construindo o HTML
+    let content = `
+        <div class="section-label">Acesso de Elite</div>
+        <a href="${DATA.principal.link}" class="main-card">
+            <div class="card-info">
+                <span class="card-title">${DATA.principal.nome}</span>
+                <span style="font-size:0.6rem; color:#666; display:block; margin-bottom:10px;">${DATA.principal.sub}</span>
+                <span class="card-date">DATA DE LANÇAMENTO: ${DATA.principal.data}</span>
+            </div>
+            <div class="badge-online">${DATA.principal.status}</div>
+        </a>
 
-        grid.innerHTML = '';
+        <div class="section-label">Módulos em Desenvolvimento</div>
+        <div class="list-wrapper">
+    `;
 
-        const rats = files.filter(file => 
-            file.name.endsWith('.html') && 
-            file.name.toLowerCase() !== 'ratautodoc.html'
-        );
+    DATA.offline.forEach(item => {
+        content += `
+            <div class="rat-item">
+                <span class="name-sn">${item.id}</span>
+                <span class="status-off">OFFLINE INDISPONÍVEL</span>
+            </div>
+        `;
+    });
 
-        if (rats.length === 0) {
-            grid.innerHTML = '<p style="color: #444;">Nenhum módulo adicional detectado em /autodoc/.</p>';
-            return;
-        }
-
-        rats.forEach(file => {
-            const name = file.name.replace('.html', '').toUpperCase();
-            const item = document.createElement('a');
-            item.href = `${FOLDER}/${file.name}`;
-            item.className = 'card rat-item';
-            item.innerHTML = `
-                <div style="color: #ff0000; font-size: 1.5rem; margin-bottom: 10px;">☣</div>
-                <div style="font-weight: bold; letter-spacing: 1px;">${name}</div>
-            `;
-            grid.appendChild(item);
-        });
-
-    } catch (error) {
-        console.error("Erro ao carregar:", error);
-        grid.innerHTML = '<p style="color: #666;">Aguardando novos módulos em /autodoc/...</p>';
-    }
+    content += `</div>`;
+    
+    // Injetando no HTML
+    root.innerHTML = content;
 }
 
-document.addEventListener('DOMContentLoaded', loadRepositoryFiles);
+// Inicia o sistema
+document.addEventListener('DOMContentLoaded', renderApp);
