@@ -60,7 +60,7 @@ function getBlackSignature(pad) {
 }
 
 function downloadPDF() {
-    // FIX MOBILE: Reseta scroll e prepara imagens
+    
     window.scrollTo(0,0);
     const imgAdmin = getBlackSignature(padAdmin);
     const imgTecnico = getBlackSignature(padTecnico);
@@ -70,17 +70,16 @@ function downloadPDF() {
     const element = document.getElementById('rat-render');
     const chamado = document.getElementById('in-chamado').value || 'S_N';
 
-    // A MÁGICA: Clonamos o elemento e forçamos o tamanho de A4 (794px de largura)
-    // Isso ignora o tamanho da tela do celular na hora de renderizar o PDF
+
     const opt = {
         margin: 0,
-        filename: 'RAT_PeixeBrabo_' + chamado + '.pdf',
+        filename: 'RAT_' + chamado + '.pdf',
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { 
             scale: 2, 
             useCORS: true, 
             letterRendering: true,
-            windowWidth: 800, // Força o motor de renderização a pensar que está num computador largo
+            windowWidth: 800, 
             scrollY: -window.scrollY 
         },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
