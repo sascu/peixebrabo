@@ -1,52 +1,105 @@
-// Configurações do Repositório
-const USER = 'sascu';
-const REPO = 'peixebrabo';
-const FOLDER = 'autodoc'; // Agora ele foca nesta pasta
-const API_URL = `https://api.github.com/repos/${USER}/${REPO}/contents/${FOLDER}`;
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Inicialização das Assinaturas (Signature Pad)
+    const canvasAdmin = document.getElementById('pad-admin');
+    const canvasTecnico = document.getElementById('pad-tecnico');
 
-async function loadRepositoryFiles() {
-    const grid = document.getElementById('rat-grid');
-    
-    try {
-        const response = await fetch(API_URL);
-        
-        if (!response.ok) throw new Error("Pasta não encontrada");
-        
-        const files = await response.json();
+    const padAdmin = new SignaturePad(canvasAdmin, { backgroundColor: 'rgb(255, 255, 255)' });
+    const padTecnico = new SignaturePad(canvasTecnico, { backgroundColor: 'rgb(255, 255, 255)' });
 
-        // Limpa o loading
-        grid.innerHTML = '';
+    window.padAdmin = padAdmin;
+    window.padTecnico = padTecnico;
 
-        // Filtra arquivos que são .html e ignora o arquivo principal ratautodoc.html (já que ele é o destaque central)
-        const rats = files.filter(file => 
-            file.name.endsWith('.html') && 
-            file.name.toLowerCase() !== 'ratautodoc.html'
-        );
-
-        if (rats.length === 0) {
-            grid.innerHTML = '<p style="color: #444;">Nenhum arquivo adicional em /autodoc/.</p>';
-            return;
-        }
-
-        rats.forEach(file => {
-            const name = file.name.replace('.html', '').toUpperCase();
-            
-            const item = document.createElement('a');
-            // O link aponta para dentro da pasta autodoc
-            item.href = `${FOLDER}/${file.name}`;
-            item.className = 'card rat-item';
-            item.innerHTML = `
-                <div style="color: #ff0000; font-size: 1.5rem; margin-bottom: 10px;">☣</div>
-                <div style="font-weight: bold; letter-spacing: 1px;">${name}</div>
-                <div style="font-size: 0.7rem; color: #555; margin-top: 5px;">Module File</div>
-            `;
-            grid.appendChild(item);
+    // Função para atualizar a imagem da assinatura no preview em tempo real
+    [padAdmin, padTecnico].forEach((pad, index) => {
+        const targetImgId = index === 0 ? 'img-admin' : 'img-tecnico';
+        pad.addEventListener("endStroke", () => {
+            const dataUrl = pad.toDataURL();
+            document.getElementById(targetImgId).src = dataUrl;
         });
+    });
 
-    } catch (error) {
-        console.error("Erro ao carregar repositório:", error);
-        grid.innerHTML = '<p style="color: #666;">Aguardando módulos serem adicionados na pasta /autodoc/...</p>';
+    // 2. Sincronização em Tempo Real (Inputs de Texto)
+    const inputMappings = [
+        'data', 'chamado', 'inicio', 'fim', 'cliente', 'obra', 
+        'endereco', 'cidade', 'desloc', 'telefone', 'eng', 
+        'escopo', 'v-versao', 'v-down', 'v-up', 'v-quais', 
+        'c-serie', 'admin-nome', 'tecnico-nome', 'porteiro'
+    ];
+
+    inputMappings.forEach(id => {
+        const inputEl = document.getElementById(`in-${id}`);
+        const outputEl = document.getElementById(`out-${id}`);
+        
+        if (inputEl && outputEl) {
+            inputEl.addEventListener('input', () => {
+                outputEl.innerText = inputEl.value;
+            });
+        }
+    });
+
+    // 3. Funções Globais de Sincronização (Chamadas pelo HTML)
+
+    // Sincroniza Checkboxes (3G, 4G, WIFI)
+    window.syncCheck = function(id, checked) {
+        const outEl = document.getElementById(`out-${id}`);
+        if (outEl) {
+            outEl.innerText = checked ? '▣' : '□';
+        }
+    };
+
+    // Sincroniza Botões Sim/Não
+    window.syncYN = function(prefix, choice) {
+        const outSim = document.getElementById(`${prefix}-s-out`);
+        const outNao = document.getElementById(`${prefix}-n-out`);
+
+        if (choice === 's') {
+            outSim.innerText = 'X';
+            outNao.innerText = '';
+        } else {
+            outSim.innerText = '';
+            outNao.innerText = 'X';
+        }
+    };
+
+    // 4. Geração de PDF (Configurado para A4)
+    window.downloadPDF = function() {
+        const element = document.getElementById('rat-render');
+        const nomeCliente = document.getElementById('in-cliente').value || 'Relatorio';
+        const numChamado = document.getElementById('in-chamado').value || '000';
+
+        // Configurações do PDF
+        const opt = {
+            margin: 0,
+            filename: `RAT_${nomeCliente}_${numChamado}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { 
+                scale: 3, // Aumenta a qualidade
+                useCORS: true,
+                letterRendering: true
+            },
+            jsPDF: { 
+                unit: 'mm', 
+                format: 'a4', 
+                orientation: 'portrait' 
+            }
+        };
+
+        // Gerar PDF
+        html2pdf().set(opt).from(element).save();
+    };
+
+    // Ajuste de tamanho dos canvas de assinatura
+    function resizeCanvas() {
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        [canvasAdmin, canvasTecnico].forEach(canvas => {
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+        });
+        padAdmin.clear();
+        padTecnico.clear();
     }
-}
 
-document.addEventListener('DOMContentLoaded', loadRepositoryFiles);
+    window.onresize = resizeCanvas;
+    resizeCanvas();
+});
