@@ -3,20 +3,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvasAdmin = document.getElementById('pad-admin');
     const canvasTecnico = document.getElementById('pad-tecnico');
 
-    // Configuração visual para o celular (Fundo preto, caneta branca)
-    const padOptions = { 
-        backgroundColor: 'rgb(0, 0, 0)', 
-        penColor: 'rgb(255, 255, 255)' 
-    };
-
+    const padOptions = { backgroundColor: 'rgb(0, 0, 0)', penColor: 'rgb(255, 255, 255)' };
     const padAdmin = new SignaturePad(canvasAdmin, padOptions);
     const padTecnico = new SignaturePad(canvasTecnico, padOptions);
 
     window.padAdmin = padAdmin;
     window.padTecnico = padTecnico;
 
-    // Função para inverter as cores da assinatura (Branco no Preto -> Preto no Branco)
-    // Isso garante que no PDF a assinatura apareça preta sobre o fundo branco
+    // Função para inverter cores da assinatura (Branco -> Preto)
     function getInvertedDataURL(canvas) {
         const tempCanvas = document.createElement('canvas');
         const tempCtx = tempCanvas.getContext('2d');
@@ -32,77 +26,60 @@ document.addEventListener('DOMContentLoaded', () => {
     [padAdmin, padTecnico].forEach((pad, index) => {
         const targetImgId = index === 0 ? 'img-admin' : 'img-tecnico';
         const canvas = index === 0 ? canvasAdmin : canvasTecnico;
-
         pad.addEventListener("endStroke", () => {
-            const invertedUrl = getInvertedDataURL(canvas);
-            document.getElementById(targetImgId).src = invertedUrl;
+            document.getElementById(targetImgId).src = getInvertedDataURL(canvas);
         });
     });
 
-    // 2. Sincronização em Tempo Real (Inputs -> Relatório)
-    const inputMappings = [
-        'data', 'chamado', 'inicio', 'fim', 'cliente', 'obra', 
-        'endereco', 'cidade', 'desloc', 'telefone', 'eng', 
-        'escopo', 'v-versao', 'v-down', 'v-up', 'v-quais', 
-        'c-serie', 'admin-nome', 'tecnico-nome', 'porteiro'
-    ];
-
+    // 2. Sincronização de Campos
+    const inputMappings = ['data', 'chamado', 'inicio', 'fim', 'cliente', 'obra', 'endereco', 'cidade', 'desloc', 'telefone', 'eng', 'escopo', 'v-versao', 'v-down', 'v-up', 'v-quais', 'c-serie', 'admin-nome', 'tecnico-nome', 'porteiro'];
     inputMappings.forEach(id => {
         const inputEl = document.getElementById(`in-${id}`);
         const outputEl = document.getElementById(`out-${id}`);
         if (inputEl && outputEl) {
-            inputEl.addEventListener('input', () => {
-                outputEl.innerText = inputEl.value;
-            });
+            inputEl.addEventListener('input', () => { outputEl.innerText = inputEl.value; });
         }
     });
 
-    window.syncCheck = function(id, checked) {
-        const outEl = document.getElementById(`out-${id}`);
-        if (outEl) outEl.innerText = checked ? '▣' : '□';
+    window.syncCheck = (id, checked) => { document.getElementById(`out-${id}`).innerText = checked ? '▣' : '□'; };
+    window.syncYN = (prefix, choice) => {
+        document.getElementById(`${prefix}-s-out`).innerText = choice === 's' ? 'X' : '';
+        document.getElementById(`${prefix}-n-out`).innerText = choice === 'n' ? 'X' : '';
     };
 
-    window.syncYN = function(prefix, choice) {
-        const outSim = document.getElementById(`${prefix}-s-out`);
-        const outNao = document.getElementById(`${prefix}-n-out`);
-        if (choice === 's') {
-            outSim.innerText = 'X'; outNao.innerText = '';
-        } else {
-            outSim.innerText = ''; outNao.innerText = 'X';
-        }
-    };
-
-    // 3. Geração de PDF (Solução Anti-Bug Mobile)
+    // 3. GERAÇÃO DE PDF - TÉCNICA DE ISOLAMENTO DE ELEMENTO
     window.downloadPDF = function() {
         const element = document.getElementById('rat-render');
         const numChamado = document.getElementById('in-chamado').value || '000';
-        
         const btn = document.querySelector('.generate-btn');
-        const originalText = btn.innerText;
+        
         btn.innerText = "GERANDO PDF...";
         btn.disabled = true;
 
+        // Opções do PDF
         const opt = {
             margin: 0,
             filename: `RAT_${numChamado}.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { 
-                scale: 2, // Melhora a nitidez
+                scale: 2, 
                 useCORS: true, 
                 letterRendering: true,
-                width: 800, // Força a renderização em 800px (tamanho A4 digital)
-                windowWidth: 800 // Evita que o layout herde a largura do celular
+                width: 794, // Largura exata de um A4 em 96dpi
+                scrollX: 0,
+                scrollY: 0
             },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        html2pdf().set(opt).from(element).save().then(() => {
-            btn.innerText = originalText;
+        // Clonamos o elemento e forçamos estilos de "limpeza" para evitar interferência do site
+        html2pdf().set(opt).from(element).toPdf().get('pdf').save().then(() => {
+            btn.innerText = "EXPORT_PDF_PRO";
             btn.disabled = false;
         });
     };
 
-    // Ajuste dos Canvas de Assinatura
+    // Ajuste de DPI do Canvas
     function resizeCanvas() {
         const ratio = Math.max(window.devicePixelRatio || 1, 1);
         [canvasAdmin, canvasTecnico].forEach(canvas => {
@@ -110,10 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             canvas.height = canvas.offsetHeight * ratio;
             canvas.getContext("2d").scale(ratio, ratio);
         });
-        padAdmin.clear();
-        padTecnico.clear();
     }
-
     window.onresize = resizeCanvas;
     resizeCanvas();
 });

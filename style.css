@@ -1,176 +1,106 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Roboto:wght@400;700;900&display=swap');
 
-/* Configurações da Sidebar e Form (Escuro) */
-.tech-sidebar {
-    background-color: #0d0d0d;
-    background-image: radial-gradient(circle at 1px 1px, #1a1a1a 1px, transparent 0);
-    background-size: 20px 20px;
-    color: #fff;
-    border-right: 1px solid #222;
-}
-
+/* UI do App - Lado Esquerdo */
+.tech-sidebar { background-color: #0d0d0d; color: #fff; border-right: 1px solid #222; }
 .scroll-area { height: 100vh; overflow-y: auto; scrollbar-width: none; }
-.scroll-area::-webkit-scrollbar { display: none; }
+.tech-card { background: rgba(255, 255, 255, 0.02); border: 1px solid #222; padding: 15px; margin-bottom: 10px; }
+.tech-card-header { font-family: 'Space Mono', monospace; color: #dc2626; font-size: 10px; font-weight: bold; border-bottom: 1px solid #222; padding-bottom: 5px; }
+.tech-sidebar input { background: #000; border: 1px solid #333; color: #fff; padding: 8px; width: 100%; font-size: 12px; }
+.generate-btn { background: #dc2626; color: white; padding: 15px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 20px; }
+.tech-sig-box { background: #000; height: 100px; border: 1px solid #333; }
 
-.tech-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid #222;
-    padding: 15px;
-    margin-bottom: 15px;
-}
-
-.tech-card-header {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    color: #dc2626;
-    border-bottom: 1px solid #222;
-    padding-bottom: 5px;
-}
-
-.tech-sidebar input, .tech-sidebar textarea {
-    background: #000;
-    border: 1px solid #333;
-    color: #fff;
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    padding: 10px;
-    width: 100%;
-}
-
-.tech-sub-box {
-    background: #050505;
-    padding: 10px;
-    border: 1px solid #1a1a1a;
-}
-
-.tech-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 11px;
-    padding: 6px 0;
-    border-bottom: 1px solid #111;
-}
-
-.tech-btns button {
-    background: #111;
-    padding: 3px 10px;
-    border: 1px solid #333;
-    margin-left: 2px;
-}
-
-.tech-btns button:focus {
-    background: #dc2626;
-    color: white;
-}
-
-.generate-btn {
-    background: #dc2626;
-    width: 100%;
-    padding: 18px;
-    color: #fff;
-    font-family: 'Space Mono', monospace;
-    font-weight: 700;
-    margin-top: 20px;
-}
-
-.tech-sig-box { background: #000; border: 1px solid #333; height: 100px; }
-
-/* --- ESTILOS DO DOCUMENTO (ÁREA DO PDF) --- */
+/* --- ÁREA DO DOCUMENTO (O QUE VAI PARA O PDF) --- */
 #rat-render {
-    width: 800px !important; /* Fixa largura para impedir esmagamento mobile */
-    min-height: 1130px;
-    padding: 30px;
+    /* IMPORTANTE: Usar mm para garantir que o A4 seja respeitado */
+    width: 210mm !important; 
+    min-height: 297mm;
     background: white !important;
     color: black !important;
-    font-family: 'Roboto', sans-serif;
+    padding: 10mm;
     box-sizing: border-box;
-    display: block;
+    font-family: 'Roboto', sans-serif;
+    /* Remove qualquer flexbox ou grid do Tailwind no documento */
+    display: block !important;
+    position: relative;
+    margin: 0 auto;
 }
 
 #rat-border-container {
-    border: 2px solid black;
-    padding: 20px;
-    height: 100%;
+    border: 1.5px solid black;
+    padding: 5mm;
+    height: 275mm; /* Altura interna para caber na borda */
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 }
 
-/* Tabelas: Força layout fixo para as colunas não se mexerem */
-.doc-table { 
-    width: 100% !important; 
-    border-collapse: collapse; 
-    table-layout: fixed; 
+/* Forçar as tabelas a ocuparem 100% sem estourar */
+.doc-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    table-layout: fixed !important; /* ISSO IMPEDE O ERRO DA SUA IMAGEM */
+    margin-bottom: -1px;
 }
 
-.doc-table td { 
-    border: 1px solid black; 
-    padding: 4px 6px; 
-    font-size: 11px;
-    word-wrap: break-word;
+.doc-table td {
+    border: 1px solid black !important;
+    padding: 3px 5px !important;
+    font-size: 10px !important;
+    word-wrap: break-word !important;
+    overflow: hidden;
 }
 
 .header-table td { border: none !important; }
-
-.bg-gray-doc { background-color: #efefef !important; }
+.bg-gray-doc { background-color: #efefef !important; -webkit-print-color-adjust: exact; }
 .font-bold { font-weight: bold; }
 
 .section-title { 
-    border: 1.5px solid black; 
-    padding: 4px; 
-    font-weight: bold; 
-    text-align: center; 
-    margin-top: 8px; 
-    background: #f0f0f0; 
+    border: 1.5px solid black; padding: 3px; font-weight: bold; text-align: center; margin-top: 5px; background: #f0f0f0; 
 }
 
-/* Escopo com Linhas */
+/* Área de Texto Lined */
 .box-text-lined {
     border: 1.5px solid black;
     border-top: none;
-    min-height: 140px;
-    background-image: linear-gradient(#ddd 1px, transparent 1px);
-    background-size: 100% 20px;
-    line-height: 20px;
+    min-height: 120px;
+    background-image: linear-gradient(#eee 1px, transparent 1px);
+    background-size: 100% 18px;
+    line-height: 18px;
     padding: 0 5px;
-    font-size: 12px;
+    font-size: 11px;
+    flex-grow: 1;
 }
 
-.check-box { 
-    display: inline-block; 
-    width: 12px; 
-    height: 12px; 
-    border: 1px solid black; 
-    text-align: center; 
-    line-height: 11px; 
-    font-size: 10px;
-}
+.check-box { display: inline-block; width: 10px; height: 10px; border: 1px solid black; text-align: center; line-height: 9px; font-size: 8px; }
 
-/* Ajuste das Assinaturas no Documento */
+/* Assinaturas */
 .preview-signature { 
     max-height: 45px; 
     position: absolute; 
     left: 50%; 
     transform: translateX(-50%); 
-    bottom: 5px; 
+    bottom: 2px; 
     pointer-events: none; 
 }
 
-/* MEDIA QUERY PARA O PREVIEW NO CELULAR */
-/* Isso escala o documento visualmente para caber na tela sem afetar o PDF */
+/* Ajuste do Preview para PC e Mobile */
 @media (max-width: 1024px) {
-    #rat-render {
-        transform: scale(0.42);
-        transform-origin: top center;
-        margin-top: 20px;
+    .w-full.lg\:w-2\/3 {
+        overflow-x: auto; /* Permite rolar pro lado se o doc for grande */
+        display: block;
     }
-    
-    /* Evita que o container fique gigante devido à escala */
-    .lg:w-2/3 {
-        overflow: hidden;
-        height: 600px;
+    #rat-render {
+        /* No mobile, diminuímos a escala visual para não estourar a tela */
+        transform: scale(0.4);
+        transform-origin: top center;
+        margin-bottom: -180mm; /* Compensa o espaço vazio do scale */
     }
 }
 
-@media print { .no-print { display: none; } }
+@media (min-width: 1025px) {
+    #rat-render {
+        /* No PC, ajustamos o zoom para caber na coluna da direita */
+        transform: scale(0.7);
+        transform-origin: top center;
+    }
+}
