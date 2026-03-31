@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PEIXE BRABO - RAT PROFISSIONAL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="flex flex-col lg:flex-row min-h-screen bg-black">
+
+    <!-- PAINEL ESQUERDO -->
+    <div class="w-full lg:w-1/3 p-6 scroll-area no-print tech-sidebar h-screen overflow-y-auto">
+        <div class="mb-8 flex items-center gap-4">
+            <div class="w-12 h-12 bg-red-600 flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.6)]">
+                <svg viewBox="0 0 24 24" class="w-8 h-8 fill-white"><path d="M21,12C21,12 18,5 11,5C10,5 5,7 3,9C2,10 2,11 3,12C2,13 2,14 3,15C5,17 10,19 11,19C18,19 21,12 21,12M17,12A1,1 0 0,1 16,13A1,1 0 0,1 15,12A1,1 0 0,1 16,11A1,1 0 0,1 17,12Z" /></svg>
+            </div>
+            <h2 class="text-xl font-black text-white uppercase">PEIXE BRABO <span class="text-red-600">RAT</span></h2>
+        </div>
+        
+        <form class="space-y-6 pb-20 text-white">
+            <!-- 01. REGISTRO -->
+            <div class="tech-card">
+                <div class="tech-num">01</div>
+                <div class="tech-card-header">REGISTRO_TEMPO</div>
+                <div class="grid grid-cols-2 gap-4 mt-4">
+                    <div class="input-group"><label>TÉCNICO</label><input type="text" id="in-tecnico"></div>
+                    <div class="input-group"><label>PARCEIRA</label><input type="text" id="in-parceira"></div>
+                    <div class="input-group"><label>DATA</label><input type="date" id="in-data" onchange="formatarDataBR(this.value)"></div>
+                    <div class="input-group"><label>CHAMADO</label><input type="text" id="in-chamado"></div>
+                    <div class="input-group"><label>INICIO</label><input type="time" id="in-inicio"></div>
+                    <div class="input-group"><label>FIM</label><input type="time" id="in-fim"></div>
+                </div>
+            </div>
+
+            <!-- 02. STATUS CHAMADO -->
+            <div class="tech-card">
+                <div class="tech-num">02</div>
+                <div class="tech-card-header">STATUS_DO_CHAMADO</div>
+                <div class="grid grid-cols-1 gap-2 mt-4 text-[10px] uppercase font-bold">
+                    <label class="check-box-tech"><input type="radio" name="st_ch" onchange="syncStatus('CONCLUÍDO')"> Concluído</label>
+                    <label class="check-box-tech"><input type="radio" name="st_ch" onchange="syncStatus('PENDENTE')"> Pendente</label>
+                    <label class="check-box-tech"><input type="radio" name="st_ch" onchange="syncStatus('IMPRODUTIVO')"> Improdutivo</label>
+                </div>
+            </div>
+
+            <!-- 03. CLIENTE -->
+            <div class="tech-card">
+                <div class="tech-num">03</div>
+                <div class="tech-card-header">DADOS_CLIENTE</div>
+                <div class="space-y-4 mt-4">
+                    <div class="input-group"><label>RAZÃO SOCIAL</label><input type="text" id="in-razao"></div>
+                    <div class="input-group"><label>RESPONSÁVEL</label><input type="text" id="in-resp"></div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="input-group"><label>TELEFONE</label><input type="text" id="in-tel"></div>
+                        <div class="input-group"><label>E-MAIL</label><input type="text" id="in-email"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 04. EQUIPAMENTO -->
+            <div class="tech-card">
+                <div class="tech-num">04</div>
+                <div class="tech-card-header">TIPO_EQUIPAMENTO</div>
+                <div class="space-y-4 mt-4">
+                    <div class="input-group"><label>LABORATÓRIO S/N</label><input type="text" id="in-lab-sn"></div>
+                    <div class="grid grid-cols-2 gap-2 text-[10px] uppercase font-bold">
+                        <label class="check-box-tech"><input type="radio" name="tp_eq" onchange="syncEquip('not')"> Notebook</label>
+                        <label class="check-box-tech"><input type="radio" name="tp_eq" onchange="syncEquip('dsk')"> Desktop</label>
+                        <label class="check-box-tech"><input type="radio" name="tp_eq" onchange="syncEquip('imp')"> Impressora</label>
+                        <label class="check-box-tech"><input type="radio" name="tp_eq" onchange="syncEquip('mob')"> Mobile</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 05. DADOS TÉCNICOS -->
+            <div class="tech-card">
+                <div class="tech-num">05</div>
+                <div class="tech-card-header">ESPECIFICAÇÕES</div>
+                <div class="grid grid-cols-2 gap-4 mt-4">
+                    <div class="space-y-2">
+                        <p class="text-red-500 text-[8px] font-bold">// ANTIGO</p>
+                        <div class="input-group"><label>MODELO</label><input type="text" id="in-ant-mod"></div>
+                        <div class="input-group"><label>PATRIMÔNIO</label><input type="text" id="in-ant-pat"></div>
+                        <div class="input-group"><label>SÉRIE</label><input type="text" id="in-ant-ser"></div>
+                    </div>
+                    <div class="space-y-2">
+                        <p class="text-red-500 text-[8px] font-bold">// NOVO</p>
+                        <div class="input-group"><label>MODELO</label><input type="text" id="in-nov-mod"></div>
+                        <div class="input-group"><label>PATRIMÔNIO</label><input type="text" id="in-nov-pat"></div>
+                        <div class="input-group"><label>SÉRIE</label><input type="text" id="in-nov-ser"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 06. RELATÓRIO -->
+            <div class="tech-card">
+                <div class="tech-num">06</div>
+                <div class="tech-card-header">SINTOMA_E_FECHAMENTO</div>
+                <div class="input-group mt-4"><label>SINTOMA</label><textarea id="in-sintoma" rows="2"></textarea></div>
+                <div class="input-group mt-2"><label>FECHAMENTO</label><textarea id="in-fechamento" rows="4"></textarea></div>
+            </div>
+
+            <!-- 07. ASSINATURAS -->
+            <div class="tech-card">
+                <div class="tech-num">07</div>
+                <div class="tech-card-header">ASSINATURAS</div>
+                <div class="space-y-6 mt-4">
+                    <div>
+                        <label class="text-red-500 text-[10px] font-bold block mb-1">TÉCNICO</label>
+                        <div class="tech-sig-box"><canvas id="pad-tecnico"></canvas></div>
+                        <button type="button" onclick="padTecnico.clear()" class="text-[9px] underline">Limpar</button>
+                    </div>
+                    <div>
+                        <label class="text-red-500 text-[10px] font-bold block mb-1">CLIENTE</label>
+                        <div class="tech-sig-box"><canvas id="pad-cliente"></canvas></div>
+                        <button type="button" onclick="padCliente.clear()" class="text-[9px] underline">Limpar</button>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" onclick="downloadPDF()" class="generate-btn">GERAR PDF</button>
+        </form>
+    </div>
+
+    <!-- VISUALIZAÇÃO RAT (DIREITA) -->
+    <div class="w-full lg:w-2/3 p-4 flex justify-center bg-zinc-900 scroll-area">
+        <div id="rat-render">
+            <div id="rat-border-container">
+                <div class="text-center text-[#C00000] font-bold text-lg mb-4">RAT (RELATÓRIO ATENDIMENTO TÉCNICO)</div>
+
+                <!-- CABEÇALHO -->
+                <table class="doc-table">
+                    <tr>
+                        <td class="bg-[#C00000] text-white font-bold w-[120px] text-[9px]">NOME DO TÉCNICO:</td>
+                        <td colspan="2" class="uppercase font-bold text-[9px]"><span id="out-tecnico"></span></td>
+                        <td class="bg-[#C00000] text-white font-bold w-[120px] text-[9px]">EMPRESA PARCEIRA:</td>
+                        <td class="uppercase font-bold text-[9px]"><span id="out-parceira"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="bg-[#C00000] text-white font-bold text-[9px]">CHAMADO:</td>
+                        <td class="font-bold text-[9px]"><span id="out-chamado"></span></td>
+                        <td class="bg-[#C00000] text-white font-bold text-[9px]">DATA:</td>
+                        <td class="text-center font-bold text-[9px]"><span id="out-data"></span></td>
+                        <td class="bg-[#C00000] text-white font-bold text-[9px]">HORÁRIO:</td>
+                        <td class="bg-white text-black font-bold text-[8px] flex-grow">
+                             <div class="flex justify-center items-center gap-2">
+                                <span>INÍCIO: <span id="out-inicio"></span></span>
+                                <span>FIM: <span id="out-fim"></span></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="text-center py-4 font-bold text-[9px] relative uppercase">
+                    ASSINATURA DO TÉCNICO / RESPONSÁVEL: __________________________________________
+                    <img id="img-tecnico" class="preview-signature-top">
+                </div>
+
+                <!-- DADOS CLIENTE -->
+                <div class="bg-[#C00000] text-white font-bold text-center py-1 border border-black uppercase text-[9px]">Dados do Cliente</div>
+                <table class="doc-table">
+                    <tr><td colspan="4" class="text-[9px]">RAZÃO SOCIAL / NOME FANTASIA: <span class="font-bold uppercase ml-2" id="out-razao"></span></td></tr>
+                    <tr><td colspan="4" class="text-[9px]">NOME DO RESPONSÁVEL: <span class="font-bold uppercase ml-2" id="out-resp"></span></td></tr>
+                    <tr>
+                        <td class="w-[100px] text-[9px]">TELEFONE:</td><td class="font-bold text-[9px]"><span id="out-tel"></span></td>
+                        <td class="w-[100px] text-[9px]">E-MAIL:</td><td class="font-bold text-[9px]"><span id="out-email"></span></td>
+                    </tr>
+                </table>
+
+                <!-- STATUS E TIPO -->
+                <div class="py-3 px-1 space-y-2 text-[9px]">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold">STATUS DO CHAMADO: <span id="out-status" class="text-[#C00000] ml-2 tracking-widest">---</span></span>
+                        <span>RETIRADO PARA LABORATÓRIO S/N: <span class="border-b border-black min-w-[100px] inline-block text-center font-bold" id="out-lab-sn"></span></span>
+                    </div>
+                    <div class="flex gap-8 items-center justify-center font-bold">
+                        <span>NOTEBOOK: [<span id="out-not"></span>]</span>
+                        <span>DESKTOP: [<span id="out-dsk"></span>]</span>
+                        <span>IMPRESSORA: [<span id="out-imp"></span>]</span>
+                        <span>MOBILE: [<span id="out-mob"></span>]</span>
+                    </div>
+                </div>
+
+                <!-- EQUIPAMENTOS -->
+                <div class="bg-[#C00000] text-white font-bold text-center py-1 border border-black uppercase text-[9px]">Dados do (s) Equipamento (s)</div>
+                <table class="doc-table">
+                    <tr class="bg-[#C00000] text-white text-center text-[8px] font-bold">
+                        <td class="w-1/2 border border-black">EQUIPAMENTO ANTIGO</td><td class="w-1/2 border border-black">EQUIPAMENTO NOVO</td>
+                    </tr>
+                    <tr>
+                        <td>MODELO: <span class="font-bold uppercase ml-1" id="out-ant-mod"></span></td>
+                        <td>MODELO: <span class="font-bold uppercase ml-1" id="out-nov-mod"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Nº PATRIMÔNIO: <span class="font-bold uppercase ml-1" id="out-ant-pat"></span></td>
+                        <td>Nº PATRIMÔNIO: <span class="font-bold uppercase ml-1" id="out-nov-pat"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Nº SÉRIE: <span class="font-bold uppercase ml-1" id="out-ant-ser"></span></td>
+                        <td>Nº SÉRIE: <span class="font-bold uppercase ml-1" id="out-nov-ser"></span></td>
+                    </tr>
+                </table>
+
+                <!-- SINTOMA E FECHAMENTO -->
+                <div class="bg-[#C00000] text-white font-bold text-center py-1 border border-black mt-2 uppercase text-[9px]">Sintoma do Problema Relatado</div>
+                <div id="out-sintoma" class="lined-box min-h-[50px]"></div>
+
+                <div class="bg-[#C00000] text-white font-bold text-center py-1 border border-black mt-2 uppercase text-[9px]">Relatório Técnico - Fechamento</div>
+                <div id="out-fechamento" class="lined-box flex-grow"></div>
+
+                <!-- RODAPÉ -->
+                <div class="mt-4">
+                    <div class="flex flex-col items-center relative py-6">
+                        <div class="w-2/3 border-t border-black text-center text-[9px] font-bold pt-1 uppercase">Assinatura do Cliente / Responsável</div>
+                        <img id="img-cliente" class="preview-signature-bottom">
+                    </div>
+                    <div class="text-center text-[#C00000] font-bold text-[9px] mt-1 italic uppercase border-t border-zinc-200 pt-2">Este documento é propriedade da ARKLOK</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
