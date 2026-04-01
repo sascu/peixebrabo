@@ -1,66 +1,271 @@
+/* ============================================================
+   FONTES E BASES
+   ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Roboto:wght@300;400;700;900&display=swap');
 
-/* SIDEBAR & GRID */
+:root {
+    --primary-red: #dc2626;      /* Vermelho Vibrante Tech */
+    --arklok-red: #C00000;       /* Vermelho Oficial do Documento */
+    --bg-dark: #0d0d0d;
+    --border-color: #222;
+    --input-bg: #000;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Scrollbar Estilizada para o Painel Tech */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: var(--primary-red); }
+
+/* ============================================================
+   PAINEL LATERAL (FORMULÁRIO TECH)
+   ============================================================ */
 .tech-sidebar { 
-    background-color: #0d0d0d; 
-    border-right: 1px solid #222;
-    background-image: radial-gradient(#1a1a1a 1px, transparent 1px);
-    background-size: 25px 25px;
-}
-body.light-mode .tech-sidebar { background-image: radial-gradient(#e5e5e5 1px, transparent 1px) !important; }
-
-.tech-card { background: rgba(255, 255, 255, 0.02); border: 1px solid #222; padding: 15px; position: relative; }
-.tech-num { position: absolute; top: -10px; right: 10px; background: #dc2626; color: white; font-size: 10px; padding: 2px 6px; font-family: 'Space Mono', monospace; font-weight: bold; }
-.tech-card-header { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700; color: #dc2626; border-bottom: 1px solid #222; padding-bottom: 5px; }
-
-.input-group { display: flex; flex-direction: column; gap: 2px; }
-.input-group label { font-family: 'Space Mono', monospace; font-size: 8px; color: #555; }
-
-.tech-sidebar input, .tech-sidebar textarea, .tech-sidebar select {
-    background: #000; border: 1px solid #333; color: #fff;
-    font-family: 'Space Mono', monospace; font-size: 11px;
-    padding: 6px; width: 100%; outline: none;
+    background-color: var(--bg-dark); 
+    border-right: 1px solid var(--border-color);
+    background-image: radial-gradient(circle at 1px 1px, #1a1a1a 1px, transparent 0);
+    background-size: 24px 24px;
 }
 
-/* CAIXAS DE ASSINATURA */
+/* Cards do Formulário */
+.tech-card { 
+    background: rgba(255, 255, 255, 0.02); 
+    border: 1px solid var(--border-color); 
+    padding: 20px; 
+    position: relative; 
+    margin-bottom: 25px;
+}
+
+.tech-num { 
+    position: absolute; 
+    top: -12px; 
+    right: 15px; 
+    background: var(--primary-red); 
+    color: white; 
+    font-size: 10px; 
+    padding: 2px 8px; 
+    font-family: 'Space Mono', monospace; 
+    font-weight: bold; 
+    clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+}
+
+.tech-card-header { 
+    font-family: 'Space Mono', monospace; 
+    font-size: 11px; 
+    font-weight: 700; 
+    color: var(--primary-red); 
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--border-color); 
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+/* Inputs e Selects */
+.input-group { display: flex; flex-direction: column; gap: 4px; }
+.input-group label { 
+    font-family: 'Space Mono', monospace; 
+    font-size: 9px; 
+    color: #666; 
+    text-transform: uppercase;
+}
+
+.tech-sidebar input, 
+.tech-sidebar textarea, 
+.tech-sidebar select {
+    background: var(--input-bg); 
+    border: 1px solid #333; 
+    color: #fff;
+    font-family: 'Space Mono', monospace; 
+    font-size: 11px;
+    padding: 8px; 
+    width: 100%; 
+    transition: all 0.3s ease;
+}
+
+.tech-sidebar input:focus, 
+.tech-sidebar select:focus { 
+    border-color: var(--primary-red); 
+    box-shadow: 0 0 10px rgba(220, 38, 38, 0.2);
+}
+
+/* Checkbox Customizado */
+.tech-checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #aaa;
+}
+
+.tech-checkbox-container input { display: none; }
+
+.checkmark {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #444;
+    display: inline-block;
+    margin-right: 8px;
+    position: relative;
+    background: #000;
+}
+
+.tech-checkbox-container input:checked + .checkmark {
+    background: var(--primary-red);
+    border-color: var(--primary-red);
+}
+
+.tech-checkbox-container input:checked + .checkmark::after {
+    content: "X";
+    position: absolute;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    left: 3px;
+    top: 0px;
+}
+
+/* ============================================================
+   ÁREAS DE ASSINATURA (NO PAINEL)
+   ============================================================ */
 .tech-sig-box { 
-    background: #000; border: 2px solid #dc2626; height: 140px; position: relative;
-    box-shadow: 0 0 10px rgba(220, 38, 38, 0.2); margin-bottom: 5px;
+    background: #000; 
+    border: 1px solid var(--border-color); 
+    height: 120px; 
+    position: relative;
+    overflow: hidden;
 }
-.tech-sig-box::after {
-    content: 'ASSINE AQUI'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    color: rgba(255, 255, 255, 0.05); font-family: 'Space Mono', monospace; font-size: 20px; font-weight: bold; pointer-events: none;
+
+.tech-sig-box::before {
+    content: "Aguardando Assinatura...";
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-family: 'Space Mono';
+    font-size: 8px;
+    color: #333;
 }
-body.light-mode .tech-sig-box { background: #f9f9f9 !important; }
-body.light-mode .tech-sig-box::after { color: rgba(0, 0, 0, 0.05) !important; }
 
-canvas { width: 100%; height: 100%; cursor: crosshair; }
-.generate-btn { background: #dc2626; width: 100%; padding: 15px; color: #fff; font-family: 'Space Mono', monospace; font-weight: 700; letter-spacing: 2px; }
+canvas { 
+    width: 100%; 
+    height: 100%; 
+    cursor: crosshair; 
+    touch-action: none;
+}
 
-/* DOCUMENTO RAT */
-#rat-render { width: 210mm; height: 296.5mm; padding: 5mm; background: white; color: black; box-sizing: border-box; font-family: 'Roboto', sans-serif; font-size: 10px; }
-#rat-border-container { border: 1.5px solid black; height: 100%; width: 100%; padding: 10px; display: flex; flex-direction: column; }
-.doc-table { width: 100%; border-collapse: collapse; }
-.doc-table td { border: 1px solid black; padding: 4px 6px; vertical-align: middle; }
-.lined-box { border: 1px solid black; border-top: none; background-image: linear-gradient(#ccc 1.1px, transparent 1.1px); background-size: 100% 1.4em; line-height: 1.4em; padding: 0 10px; font-size: 10px; white-space: pre-wrap; }
+/* ============================================================
+   DOCUMENTO RAT (ESTILO A4 BRANCO)
+   ============================================================ */
+#rat-render { 
+    width: 210mm; 
+    min-height: 296.5mm; 
+    padding: 10mm; 
+    background: white; 
+    color: black; 
+    box-sizing: border-box; 
+    font-family: 'Roboto', sans-serif; 
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
 
-/* POSICIONAMENTO ASSINATURAS NO PDF */
-.preview-signature-top { position: absolute; height: 40px; left: 50%; transform: translateX(40px); bottom: -10px; pointer-events: none; mix-blend-mode: multiply; }
-.preview-signature-bottom { position: absolute; height: 45px; left: 50%; transform: translateX(-50%); bottom: 20px; pointer-events: none; mix-blend-mode: multiply; }
+#rat-border-container { 
+    border: 2px solid black; 
+    height: 100%; 
+    width: 100%; 
+    padding: 8px; 
+    display: flex; 
+    flex-direction: column; 
+}
 
-/* CUSTOM CHECKBOX */
-.tech-checkbox-container { display: flex; align-items: center; cursor: pointer; position: relative; padding-left: 25px; font-family: 'Space Mono', monospace; font-size: 10px; color: #fff; user-select: none; }
-.tech-checkbox-container input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
-.checkmark { position: absolute; top: 0; left: 0; height: 16px; width: 16px; background-color: #000; border: 1px solid #444; transition: all 0.2s ease; }
-.tech-checkbox-container input:checked ~ .checkmark { background-color: #dc2626; border-color: #dc2626; box-shadow: 0 0 10px rgba(220, 38, 38, 0.5); }
-.checkmark:after { content: ""; position: absolute; display: none; left: 5px; top: 2px; width: 4px; height: 8px; border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); }
-.tech-checkbox-container input:checked ~ .checkmark:after { display: block; }
+/* Tabelas do Documento */
+.doc-table { width: 100%; border-collapse: collapse; margin-bottom: -1px; }
+.doc-table td { 
+    border: 1px solid black; 
+    padding: 3px 6px; 
+    font-size: 9px;
+}
 
-/* MODO CLARO OVERRIDES */
-body.light-mode { background-color: #f4f4f5 !important; }
-body.light-mode .tech-sidebar { background-color: #fff !important; border-color: #ddd !important; }
-body.light-mode .tech-card { background: #fdfdfd !important; border-color: #eee !important; color: #000; }
-body.light-mode .tech-sidebar input, body.light-mode .tech-sidebar textarea, body.light-mode .tech-sidebar select { background: #fff !important; color: #000 !important; border-color: #ddd !important; }
-body.light-mode .bg-zinc-900 { background-color: #e4e4e7 !important; }
+/* Estilo para caixas com linhas (Sintoma e Fechamento) */
+.lined-box { 
+    border: 1px solid black; 
+    border-top: none; 
+    background-image: linear-gradient(#eee 1.1px, transparent 1.1px); 
+    background-size: 100% 1.4em; 
+    line-height: 1.4em; 
+    padding: 5px 10px; 
+    font-size: 10px; 
+    white-space: pre-wrap;
+    font-family: 'Roboto', sans-serif;
+}
 
-@media (max-width: 1023px) { body { height: auto !important; overflow: auto !important; } }
+/* Assinaturas Renderizadas no PDF */
+.preview-signature-top { 
+    position: absolute; 
+    height: 30px; 
+    left: 50%; 
+    top: -10px; 
+    pointer-events: none;
+}
+
+.preview-signature-bottom { 
+    position: absolute; 
+    height: 30px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    bottom: 30px; 
+    pointer-events: none;
+}
+
+/* Botão de Geração */
+.generate-btn { 
+    background: var(--primary-red); 
+    width: 100%; 
+    padding: 18px; 
+    color: #fff; 
+    font-family: 'Space Mono', monospace; 
+    font-weight: 700; 
+    letter-spacing: 3px; 
+    border: none;
+    cursor: pointer;
+}
+
+.generate-btn:hover { filter: brightness(1.2); }
+
+/* ============================================================
+   MODO CLARO (OVERRIDES)
+   ============================================================ */
+body.light-mode .tech-sidebar { 
+    background-color: #f4f4f5 !important; 
+    border-right: 1px solid #ddd !important; 
+}
+
+body.light-mode .tech-card { 
+    background: #ffffff !important; 
+    border-color: #ddd !important; 
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .tech-sidebar input, 
+body.light-mode .tech-sidebar textarea, 
+body.light-mode .tech-sidebar select {
+    background: #fff !important; 
+    color: #000 !important; 
+    border-color: #ccc !important;
+}
+
+body.light-mode .tech-sig-box { 
+    background: #fff !important; 
+    border-color: #ccc !important; 
+}
+
+/* Utilitários */
+.no-print { display: block; }
+@media print { .no-print { display: none; } }
+
+
+

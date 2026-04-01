@@ -127,12 +127,34 @@ window.copiarScript = () => {
 };
 
 window.downloadPDF = function() {
-    const element = document.getElementById('rat-render');
-    const opt = {
-        margin: 0, filename: 'RAT_ARKLOK.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        const element = document.getElementById('rat-render');
+        const numChamado = document.getElementById('in-chamado').value || '000';
+        const btn = document.querySelector('.generate-btn');
+        
+        btn.innerText = "GERANDO PDF...";
+        btn.disabled = true;
+
+        // Opções do PDF
+        const opt = {
+            margin: 0,
+            filename: `RAT_${numChamado}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { 
+                scale: 2, 
+                useCORS: true, 
+                letterRendering: true,
+                width: 794, // Largura exata de um A4 em 96dpi
+                scrollX: 0,
+                scrollY: 0
+            },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        // Clonamos o elemento e forçamos estilos de "limpeza" para evitar interferência do site
+        html2pdf().set(opt).from(element).toPdf().get('pdf').save().then(() => {
+            btn.innerText = "EXPORT_PDF_PRO";
+            btn.disabled = false;
+        });
     };
-    html2pdf().set(opt).from(element).save();
-};
+
+    
