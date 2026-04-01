@@ -11,10 +11,26 @@
 .scroll-area { height: 100vh; overflow-y: auto; scrollbar-width: none; }
 .scroll-area::-webkit-scrollbar { display: none; }
 
+/* AJUSTE NO CARD PARA RECEBER A NUMERAÇÃO */
 .tech-card {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid #222;
     padding: 15px;
+    position: relative; /* Necessário para posicionar o número */
+    margin-top: 10px;
+}
+
+/* CLASSE DE NUMERAÇÃO IGUAL AO PROJETO ARKLOK */
+.tech-num { 
+    position: absolute; 
+    top: -10px; 
+    right: 10px; 
+    background: #dc2626; 
+    color: white; 
+    font-size: 10px; 
+    padding: 2px 6px; 
+    font-family: 'Space Mono', monospace; 
+    font-weight: bold; 
 }
 
 .tech-card-header {
@@ -141,3 +157,20 @@ canvas { width: 100%; height: 100%; cursor: crosshair; }
 .doc-table tr.font-bold td:last-child { border-left: none !important; }
 
 @media print { .no-print { display: none; } }
+
+/* MODO CLARO - OVERRIDES */
+body.light-mode { background-color: #f4f4f5 !important; }
+body.light-mode .tech-sidebar { background-color: #ffffff !important; border-right: 1px solid #ddd !important; }
+body.light-mode .tech-sidebar h2 { color: #000 !important; }
+body.light-mode .tech-card { background: #fdfdfd !important; border-color: #eee !important; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+body.light-mode .tech-sidebar input, 
+body.light-mode .tech-sidebar textarea, 
+body.light-mode .tech-sidebar select {
+    background: #fff !important; color: #000 !important; border-color: #ddd !important;
+}
+body.light-mode .tech-sidebar label { color: #888 !important; }
+body.light-mode .tech-sig-box { background: #f9f9f9 !important; border-color: #dc2626 !important; }
+body.light-mode .tech-sig-box::after { color: rgba(0, 0, 0, 0.05) !important; }
+body.light-mode .bg-zinc-900 { background-color: #e4e4e7 !important; }
+
+@media (max-width: 1023px) { body { height: auto !important; overflow: auto !important; } }

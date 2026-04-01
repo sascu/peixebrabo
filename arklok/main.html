@@ -3,23 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PEIXE BRABO - RAT PROFISSIONAL</title>
+    <title>PEIXE BRABO - RATS V5.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="flex flex-col lg:flex-row min-h-screen bg-black">
+<body class="flex flex-col lg:flex-row lg:h-screen lg:overflow-hidden bg-black transition-colors duration-300">
 
-    <!-- PAINEL ESQUERDO -->
-    <div class="w-full lg:w-1/3 p-6 scroll-area no-print tech-sidebar h-screen overflow-y-auto">
-        <div class="mb-8 flex items-center gap-4">
-            <div class="w-12 h-12 bg-red-600 flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.6)]">
-                <svg viewBox="0 0 24 24" class="w-8 h-8 fill-white"><path d="M21,12C21,12 18,5 11,5C10,5 5,7 3,9C2,10 2,11 3,12C2,13 2,14 3,15C5,17 10,19 11,19C18,19 21,12 21,12M17,12A1,1 0 0,1 16,13A1,1 0 0,1 15,12A1,1 0 0,1 16,11A1,1 0 0,1 17,12Z" /></svg>
-            </div>
-            <h2 class="text-xl font-black text-white uppercase">PEIXE BRABO <span class="text-red-600">RAT</span></h2>
-        </div>
+    <!-- PAINEL ESQUERDO (FORMULÁRIO) -->
+    <div class="w-full lg:w-1/3 p-6 no-print tech-sidebar lg:h-full lg:overflow-y-auto border-r border-zinc-800 relative">
         
+        <!-- CABEÇALHO BRANDING -->
+        <div class="mb-10 relative">
+            <div class="flex items-center gap-4">
+                <div class="w-16 h-16 bg-red-600 flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.6)] shrink-0">
+                    <svg viewBox="0 0 24 24" class="w-10 h-10 fill-white">
+                        <path d="M21,12C21,12 18,5 11,5C10,5 5,7 3,9C2,10 2,11 3,12C2,13 2,14 3,15C5,17 10,19 11,19C18,19 21,12 21,12M17,12A1,1 0 0,1 16,13A1,1 0 0,1 15,12A1,1 0 0,1 16,11A1,1 0 0,1 17,12Z" />
+                    </svg>
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-2xl font-black text-white uppercase leading-none tracking-tighter" id="brand-title">
+                            PEIXE BRABO <span class="text-red-600">RATS</span>
+                        </h2>
+                        <button type="button" onclick="toggleTheme()" id="theme-btn" class="p-2 hover:bg-zinc-800/50 rounded-full transition-all">
+                            <svg id="theme-icon" viewBox="0 0 24 24" class="w-6 h-6 fill-yellow-500">
+                                <path d="M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42L18.35,4.65L17.58,8.61L21,11L17.58,13.39L18.35,17.35L14.39,16.58L12,20L9.61,16.58L5.65,17.35L6.42,13.39L3,11L6.42,8.61L5.65,4.65L9.61,5.42L12,2Z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-zinc-500 mt-1 uppercase font-bold tracking-[0.2em]">RAT ARKLOK</p>
+                </div>
+            </div>
+            <div class="mt-5 h-[2px] w-full bg-gradient-to-r from-red-600 via-red-600 to-transparent"></div>
+        </div>
+
         <form class="space-y-6 pb-20 text-white">
             <!-- 01. REGISTRO -->
             <div class="tech-card">
@@ -28,10 +47,12 @@
                 <div class="grid grid-cols-2 gap-4 mt-4">
                     <div class="input-group"><label>TÉCNICO</label><input type="text" id="in-tecnico"></div>
                     <div class="input-group"><label>PARCEIRA</label><input type="text" id="in-parceira"></div>
-                    <div class="input-group"><label>DATA</label><input type="date" id="in-data" onchange="formatarDataBR(this.value)"></div>
+                    <div class="input-group"><label>DATA</label><input type="date" id="in-data"></div>
                     <div class="input-group"><label>CHAMADO</label><input type="text" id="in-chamado"></div>
                     <div class="input-group"><label>INICIO</label><input type="time" id="in-inicio"></div>
                     <div class="input-group"><label>FIM</label><input type="time" id="in-fim"></div>
+                    <div class="input-group"><label>KM INICIAL</label><input type="text" id="in-km-ini"></div>
+                    <div class="input-group"><label>KM FINAL</label><input type="text" id="in-km-fim"></div>
                 </div>
             </div>
 
@@ -39,10 +60,14 @@
             <div class="tech-card">
                 <div class="tech-num">02</div>
                 <div class="tech-card-header">STATUS_DO_CHAMADO</div>
-                <div class="grid grid-cols-1 gap-2 mt-4 text-[10px] uppercase font-bold">
-                    <label class="check-box-tech"><input type="radio" name="st_ch" onchange="syncStatus('CONCLUÍDO')"> Concluído</label>
-                    <label class="check-box-tech"><input type="radio" name="st_ch" onchange="syncStatus('PENDENTE')"> Pendente</label>
-                    <label class="check-box-tech"><input type="radio" name="st_ch" onchange="syncStatus('IMPRODUTIVO')"> Improdutivo</label>
+                <div class="input-group mt-4">
+                    <label>SELECIONE O STATUS</label>
+                    <select id="sel-status" onchange="syncStatus(this.value)">
+                        <option value="---">--</option>
+                        <option value="CONCLUÍDO">CONCLUÍDO</option>
+                        <option value="PENDENTE">PENDENTE</option>
+                        <option value="IMPRODUTIVO">IMPRODUTIVO</option>
+                    </select>
                 </div>
             </div>
 
@@ -52,173 +77,402 @@
                 <div class="tech-card-header">DADOS_CLIENTE</div>
                 <div class="space-y-4 mt-4">
                     <div class="input-group"><label>RAZÃO SOCIAL</label><input type="text" id="in-razao"></div>
+                    <div class="input-group"><label>ENDEREÇO DO LOCAL</label><input type="text" id="in-endereco"></div>
                     <div class="input-group"><label>RESPONSÁVEL</label><input type="text" id="in-resp"></div>
+                    <div class="input-group"><label>TELEFONE (ESPAÇO AMPLIADO)</label><input type="text" id="in-tel" placeholder="(00) 00000-0000"></div>
+                    <div class="input-group"><label>E-MAIL</label><input type="text" id="in-email"></div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="input-group"><label>TELEFONE</label><input type="text" id="in-tel"></div>
-                        <div class="input-group"><label>E-MAIL</label><input type="text" id="in-email"></div>
+                        <div class="input-group"><label>CARGO</label><input type="text" id="in-cargo"></div>
+                        <div class="input-group"><label>DEPARTAMENTO</label><input type="text" id="in-depto"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- 04. EQUIPAMENTO -->
+            <!-- 04. STATUS E EQUIPAMENTO -->
             <div class="tech-card">
                 <div class="tech-num">04</div>
-                <div class="tech-card-header">TIPO_EQUIPAMENTO</div>
+                <div class="tech-card-header">STATUS_E_EQUIPAMENTO</div>
                 <div class="space-y-4 mt-4">
-                    <div class="input-group"><label>LABORATÓRIO S/N</label><input type="text" id="in-lab-sn"></div>
-                    <div class="grid grid-cols-2 gap-2 text-[10px] uppercase font-bold">
-                        <label class="check-box-tech"><input type="radio" name="tp_eq" onchange="syncEquip('not')"> Notebook</label>
-                        <label class="check-box-tech"><input type="radio" name="tp_eq" onchange="syncEquip('dsk')"> Desktop</label>
-                        <label class="check-box-tech"><input type="radio" name="tp_eq" onchange="syncEquip('imp')"> Impressora</label>
-                        <label class="check-box-tech"><input type="radio" name="tp_eq" onchange="syncEquip('mob')"> Mobile</label>
+                    <div class="input-group">
+                        <label>RETIRADO PARA LABORATÓRIO?</label>
+                        <select id="sel-lab-sn" onchange="syncLab(this.value)">
+                            <option value="">--</option>
+                            <option value="SIM">SIM</option>
+                            <option value="NÃO">NÃO</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>NATUREZA DO ATENDIMENTO</label>
+                        <select id="sel-natureza" onchange="syncNatureza(this.value)">
+                            <option value="">--</option>
+                            <option value="subst">SUBSTITUIÇÃO OU TROCA</option>
+                            <option value="upgr">UPGRADE (SSD, MEMÓRIA)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>TIPO DE EQUIPAMENTO</label>
+                        <select id="sel-tipo-eq" onchange="syncEquip(this.value)">
+                            <option value="">--</option>
+                            <option value="not">NOTEBOOK</option>
+                            <option value="dsk">DESKTOP</option>
+                            <option value="imp">IMPRESSORA</option>
+                            <option value="mob">MOBILE</option>
+                            <option value="out">OUTROS</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>ESPECIFIQUE (SE OUTROS)</label>
+                        <input type="text" id="in-outros-desc">
                     </div>
                 </div>
             </div>
 
-            <!-- 05. DADOS TÉCNICOS -->
+            <!-- 05. ESPECIFICAÇÕES -->
             <div class="tech-card">
                 <div class="tech-num">05</div>
-                <div class="tech-card-header">ESPECIFICAÇÕES</div>
+                <div class="tech-card-header">ESPECIFICAÇÕES_EQUIPAMENTOS</div>
                 <div class="grid grid-cols-2 gap-4 mt-4">
-                    <div class="space-y-2">
+                    <div class="space-y-2 border-r border-white/10 pr-2">
                         <p class="text-red-500 text-[8px] font-bold">// ANTIGO</p>
                         <div class="input-group"><label>MODELO</label><input type="text" id="in-ant-mod"></div>
                         <div class="input-group"><label>PATRIMÔNIO</label><input type="text" id="in-ant-pat"></div>
                         <div class="input-group"><label>SÉRIE</label><input type="text" id="in-ant-ser"></div>
+                        <div class="input-group"><label>HOSTNAME</label><input type="text" id="in-ant-host"></div>
+                        <div class="input-group"><label>ETIQUETA CLIENTE</label><input type="text" id="in-ant-etiqueta"></div>
+                        <div class="input-group"><label>IMEI</label><input type="text" id="in-ant-imei"></div>
                     </div>
                     <div class="space-y-2">
                         <p class="text-red-500 text-[8px] font-bold">// NOVO</p>
                         <div class="input-group"><label>MODELO</label><input type="text" id="in-nov-mod"></div>
                         <div class="input-group"><label>PATRIMÔNIO</label><input type="text" id="in-nov-pat"></div>
                         <div class="input-group"><label>SÉRIE</label><input type="text" id="in-nov-ser"></div>
+                        <div class="input-group"><label>HOSTNAME</label><input type="text" id="in-nov-host"></div>
+                        <div class="input-group"><label>ETIQUETA CLIENTE</label><input type="text" id="in-nov-etiqueta"></div>
+                        <div class="input-group"><label>IMEI</label><input type="text" id="in-nov-imei"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- 06. RELATÓRIO -->
+            <!-- 06. BACKUP E ACESSÓRIOS -->
             <div class="tech-card">
                 <div class="tech-num">06</div>
+                <div class="tech-card-header">BACKUP_E_ACESSORIOS</div>
+                <div class="space-y-4 mt-4">
+                    <div class="flex items-end gap-3">
+                        <label class="tech-checkbox-container mb-1">
+                            <input type="checkbox" onchange="syncCheckDoc('chk-backup', this.checked)">
+                            <span class="checkmark"></span>
+                        </label>
+                        <div class="input-group flex-grow">
+                            <label>BACKUP REALIZADO</label>
+                            <input type="text" id="in-backup-desc">
+                        </div>
+                    </div>
+                    <div class="flex items-end gap-3">
+                        <label class="tech-checkbox-container mb-1">
+                            <input type="checkbox" onchange="syncCheckDoc('chk-perfil', this.checked)">
+                            <span class="checkmark"></span>
+                        </label>
+                        <div class="input-group flex-grow">
+                            <label>NOME PERFIL USUÁRIO</label>
+                            <input type="text" id="in-perfil">
+                        </div>
+                    </div>
+                    <div class="flex items-end gap-3">
+                        <label class="tech-checkbox-container mb-1">
+                            <input type="checkbox" onchange="syncCheckDoc('chk-peri1', this.checked)">
+                            <span class="checkmark"></span>
+                        </label>
+                        <div class="input-group flex-grow">
+                            <label>ACESSÓRIO 1 / PATRIMÔNIO</label>
+                            <input type="text" id="in-peri-1">
+                        </div>
+                    </div>
+                    <div class="flex items-end gap-3">
+                        <label class="tech-checkbox-container mb-1">
+                            <input type="checkbox" onchange="syncCheckDoc('chk-peri2', this.checked)">
+                            <span class="checkmark"></span>
+                        </label>
+                        <div class="input-group flex-grow">
+                            <label>ACESSÓRIO 2 / PATRIMÔNIO</label>
+                            <input type="text" id="in-peri-2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 07. VALIDAÇÃO SOFTWARE -->
+            <div class="tech-card">
+                <div class="tech-num">07</div>
+                <div class="tech-card-header">VALIDACAO_SOFTWARE_GESTAO</div>
+                <div class="grid grid-cols-3 gap-2 mt-4">
+                    <label class="tech-checkbox-container">
+                        <input type="checkbox" onchange="syncCheckDoc('chk-aim', this.checked)">
+                        <span class="checkmark"></span> AIM
+                    </label>
+                    <label class="tech-checkbox-container">
+                        <input type="checkbox" onchange="syncCheckDoc('chk-kace', this.checked)">
+                        <span class="checkmark"></span> KACE
+                    </label>
+                    <label class="tech-checkbox-container">
+                        <input type="checkbox" onchange="syncCheckDoc('chk-soft-out', this.checked)">
+                        <span class="checkmark"></span> OUTROS
+                    </label>
+                </div>
+                <div class="input-group mt-4">
+                    <label>OBSERVAÇÕES DE SOFTWARE</label>
+                    <input type="text" id="in-soft-obs">
+                </div>
+            </div>
+
+            <!-- 08. RELATÓRIO -->
+            <div class="tech-card">
+                <div class="tech-num">08</div>
                 <div class="tech-card-header">SINTOMA_E_FECHAMENTO</div>
                 <div class="input-group mt-4"><label>SINTOMA</label><textarea id="in-sintoma" rows="2"></textarea></div>
                 <div class="input-group mt-2"><label>FECHAMENTO</label><textarea id="in-fechamento" rows="4"></textarea></div>
             </div>
 
-            <!-- 07. ASSINATURAS -->
+            <!-- 08.1 DATA E LOCALIDADE -->
             <div class="tech-card">
-                <div class="tech-num">07</div>
-                <div class="tech-card-header">ASSINATURAS</div>
+                <div class="tech-num">08.1</div>
+                <div class="tech-card-header">DATA_LOCALIDADE</div>
+                <div class="grid grid-cols-2 gap-4 mt-4">
+                    <div class="input-group"><label>CIDADE</label><input type="text" id="in-cidade"></div>
+                    <div class="input-group"><label>DIA</label><input type="text" id="in-dia"></div>
+                    <div class="input-group"><label>MÊS</label><input type="text" id="in-mes"></div>
+                    <div class="input-group"><label>ANO (FINAL)</label><input type="text" id="in-ano" placeholder="Ex: 5"></div>
+                </div>
+            </div>
+
+            <!-- 09. ASSINATURAS -->
+            <div class="tech-card">
+                <div class="tech-num">09</div>
+                <div class="tech-card-header">ASSINATURAS_DIGITAIS</div>
                 <div class="space-y-6 mt-4">
                     <div>
-                        <label class="text-red-500 text-[10px] font-bold block mb-1">TÉCNICO</label>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="text-red-500 text-[10px] font-bold uppercase tracking-tighter">>>> TÉCNICO</label>
+                            <button type="button" onclick="padTecnico.clear()" class="text-[8px] bg-zinc-800 px-2 py-0.5 rounded text-zinc-400 hover:text-white">LIMPAR</button>
+                        </div>
                         <div class="tech-sig-box"><canvas id="pad-tecnico"></canvas></div>
-                        <button type="button" onclick="padTecnico.clear()" class="text-[9px] underline">Limpar</button>
                     </div>
                     <div>
-                        <label class="text-red-500 text-[10px] font-bold block mb-1">CLIENTE</label>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="text-red-500 text-[10px] font-bold uppercase tracking-tighter">>>> CLIENTE</label>
+                            <button type="button" onclick="padCliente.clear()" class="text-[8px] bg-zinc-800 px-2 py-0.5 rounded text-zinc-400 hover:text-white">LIMPAR</button>
+                        </div>
                         <div class="tech-sig-box"><canvas id="pad-cliente"></canvas></div>
-                        <button type="button" onclick="padCliente.clear()" class="text-[9px] underline">Limpar</button>
                     </div>
                 </div>
             </div>
 
+            <button type="button" onclick="gerarScript()" class="w-full bg-zinc-800 text-white p-4 mb-2 font-bold border border-zinc-700 hover:bg-zinc-700 transition-all uppercase text-[10px] tracking-widest">
+                Abrir Script de Fechamento
+            </button>
             <button type="button" onclick="downloadPDF()" class="generate-btn">GERAR PDF</button>
         </form>
     </div>
 
     <!-- VISUALIZAÇÃO RAT (DIREITA) -->
-    <div class="w-full lg:w-2/3 p-4 flex justify-center bg-zinc-900 scroll-area">
+    <div class="w-full lg:w-2/3 p-4 flex justify-center bg-zinc-900 lg:h-full lg:overflow-y-auto">
         <div id="rat-render">
             <div id="rat-border-container">
                 <div class="text-center text-[#C00000] font-bold text-lg mb-4">RAT (RELATÓRIO ATENDIMENTO TÉCNICO)</div>
 
-                <!-- CABEÇALHO -->
+                <div class="flex flex-col gap-1 mb-2">
+                    <table class="doc-table">
+                        <tr>
+                            <td class="bg-[#C00000] text-white font-bold w-[120px] text-[9px]">NOME DO TÉCNICO:</td>
+                            <td class="uppercase font-bold text-[9px]"><span id="out-tecnico"></span></td>
+                            <td class="bg-[#C00000] text-white font-bold w-[130px] text-[9px]">EMPRESA PARCEIRA:</td>
+                            <td class="uppercase font-bold text-[9px]"><span id="out-parceira"></span></td>
+                        </tr>
+                    </table>
+                    <table class="doc-table">
+                        <tr>
+                            <td class="bg-[#C00000] text-white font-bold w-[100px] text-[9px]">CHAMADO:</td>
+                            <td class="font-bold text-[9px] w-[180px]"><span id="out-chamado"></span></td>
+                            <td class="bg-[#C00000] text-white font-bold w-[160px] text-[9px]">DATA DO ATENDIMENTO:</td>
+                            <td class="text-center font-bold text-[9px] w-[120px]"><span id="out-data"></span></td>
+                            <td class="bg-[#C00000] text-white font-bold w-[80px] text-[9px]">HORÁRIO:</td>
+                            <td class="bg-white text-black font-bold text-[8px]">
+                                <div class="flex justify-center items-center gap-4">
+                                    <span>INÍCIO: <span id="out-inicio"></span></span>
+                                    <span>FIM: <span id="out-fim"></span></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="text-center py-2 relative uppercase border-x border-black">
+                    <span class="text-[9px] font-bold">ASSINATURA DO TÉCNICO / RESPONSÁVEL: __________________________________________</span>
+                    <img id="img-tecnico" class="preview-signature-top">
+                </div>
+
+                <div class="bg-[#C00000] text-white font-bold text-center py-1 border border-black uppercase text-[9px]">Dados do Cliente</div>
+                <div class="border border-black p-2 space-y-2">
+                    <div class="flex border-b border-black/20">
+                        <span class="text-[9px] whitespace-nowrap">RAZÃO SOCIAL / NOME FANTASIA:</span>
+                        <span class="font-bold uppercase ml-2 text-[9px] flex-grow" id="out-razao"></span>
+                    </div>
+                    <div class="flex border-b border-black/20">
+                        <span class="text-[9px] whitespace-nowrap">NOME DO RESPONSÁVEL:</span>
+                        <span class="font-bold uppercase ml-2 text-[9px] flex-grow" id="out-resp"></span>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex border-b border-black/20 flex-grow">
+                            <span class="text-[9px] whitespace-nowrap">TELEFONE:</span>
+                            <span class="font-bold text-[9px] ml-2 flex-grow" id="out-tel"></span>
+                        </div>
+                        <div class="flex border-b border-black/20 flex-[2]">
+                            <span class="text-[9px] whitespace-nowrap">E-MAIL:</span>
+                            <span class="font-bold text-[9px] ml-2 flex-grow" id="out-email"></span>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex border-b border-black/20 flex-grow">
+                            <span class="text-[9px] whitespace-nowrap">CARGO:</span>
+                            <span class="font-bold text-[9px] ml-2 flex-grow" id="out-cargo"></span>
+                        </div>
+                        <div class="flex border-b border-black/20 flex-grow">
+                            <span class="text-[9px] whitespace-nowrap">DEPARTAMENTO:</span>
+                            <span class="font-bold text-[9px] ml-2 flex-grow" id="out-depto"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-2 px-1 text-[8.5px] space-y-2">
+                    <div class="flex justify-between items-center w-full px-2">
+                        <span class="whitespace-nowrap">RETIRADO PARA LABORATÓRIO S/N: <span class="border-b border-black min-w-[120px] inline-block text-center font-bold" id="out-lab-sn"></span></span>
+                        <span class="whitespace-nowrap">SUBSTITUIÇÃO OU TROCA: [ <span id="out-subst" class="font-bold inline-block w-3 text-center"></span> ]</span>
+                        <span class="whitespace-nowrap">UPGRADE (ATUALIZAÇÃO SSD, MEMÓRIA): [ <span id="out-upgrade" class="font-bold inline-block w-3 text-center"></span> ]</span>
+                    </div>
+                    <div class="flex justify-between items-center w-full px-2 font-bold uppercase">
+                        <span class="whitespace-nowrap">NOTEBOOK: [ <span id="out-not" class="inline-block w-3 text-center"></span> ]</span>
+                        <span class="whitespace-nowrap">DESKTOP: [ <span id="out-dsk" class="inline-block w-3 text-center"></span> ]</span>
+                        <span class="whitespace-nowrap">IMPRESSORA: [ <span id="out-imp" class="inline-block w-3 text-center"></span> ]</span>
+                        <span class="whitespace-nowrap">MOBILE: [ <span id="out-mob" class="inline-block w-3 text-center"></span> ]</span>
+                        <span class="whitespace-nowrap">OUTROS: <span class="border-b border-black min-w-[150px] inline-block text-center font-normal px-1" id="out-outros-desc"></span></span>
+                    </div>
+                </div>
+
+                <div class="bg-[#C00000] text-white font-bold text-center py-1 border border-black uppercase text-[9px]">Dados do (s) Equipamento (s)</div>
                 <table class="doc-table">
-                    <tr>
-                        <td class="bg-[#C00000] text-white font-bold w-[120px] text-[9px]">NOME DO TÉCNICO:</td>
-                        <td colspan="2" class="uppercase font-bold text-[9px]"><span id="out-tecnico"></span></td>
-                        <td class="bg-[#C00000] text-white font-bold w-[120px] text-[9px]">EMPRESA PARCEIRA:</td>
-                        <td class="uppercase font-bold text-[9px]"><span id="out-parceira"></span></td>
+                    <tr class="bg-[#C00000] text-white text-center text-[8px] font-bold">
+                        <td class="w-1/2 border border-black">EQUIPAMENTO ANTIGO</td>
+                        <td class="w-1/2 border border-black">EQUIPAMENTO NOVO</td>
                     </tr>
                     <tr>
-                        <td class="bg-[#C00000] text-white font-bold text-[9px]">CHAMADO:</td>
-                        <td class="font-bold text-[9px]"><span id="out-chamado"></span></td>
-                        <td class="bg-[#C00000] text-white font-bold text-[9px]">DATA:</td>
-                        <td class="text-center font-bold text-[9px]"><span id="out-data"></span></td>
-                        <td class="bg-[#C00000] text-white font-bold text-[9px]">HORÁRIO:</td>
-                        <td class="bg-white text-black font-bold text-[8px] flex-grow">
-                             <div class="flex justify-center items-center gap-2">
-                                <span>INÍCIO: <span id="out-inicio"></span></span>
-                                <span>FIM: <span id="out-fim"></span></span>
+                        <td class="text-[8px]">MODELO: <span class="font-bold uppercase ml-1" id="out-ant-mod"></span></td>
+                        <td class="text-[8px]">MODELO: <span class="font-bold uppercase ml-1" id="out-nov-mod"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-[8px]">Nº PATRIMÔNIO DO EQUIPAMENTO: <span class="font-bold uppercase ml-1" id="out-ant-pat"></span></td>
+                        <td class="text-[8px]">Nº PATRIMÔNIO DO EQUIPAMENTO: <span class="font-bold uppercase ml-1" id="out-nov-pat"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-[8px]">Nº SÉRIE: <span class="font-bold uppercase ml-1" id="out-ant-ser"></span></td>
+                        <td class="text-[8px]">Nº SÉRIE: <span class="font-bold uppercase ml-1" id="out-nov-ser"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-[8px]">HOSTNAME: <span class="font-bold uppercase ml-1" id="out-ant-host"></span></td>
+                        <td class="text-[8px]">HOSTNAME: <span class="font-bold uppercase ml-1" id="out-nov-host"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-[8px]">Nº ETIQUETA E SÉRIE CLIENTE: <span class="font-bold uppercase ml-1" id="out-ant-etiqueta"></span></td>
+                        <td class="text-[8px]">Nº ETIQUETA E SÉRIE CLIENTE: <span class="font-bold uppercase ml-1" id="out-nov-etiqueta"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-[8px]">IMEI: <span class="font-bold uppercase ml-1" id="out-ant-imei"></span></td>
+                        <td class="text-[8px]">IMEI: <span class="font-bold uppercase ml-1" id="out-nov-imei"></span></td>
+                    </tr>
+                </table>
+
+                <table class="doc-table mt-0">
+                    <tr class="bg-[#C00000] text-white text-center text-[8px] font-bold">
+                        <td class="w-1/2 border border-black">BACKUP</td>
+                        <td class="w-1/2 border border-black">ACESSÓRIOS OU PERIFÉRICOS</td>
+                    </tr>
+                    <tr>
+                        <td class="p-1">
+                            <div class="flex items-end justify-between text-[8px]">
+                                <span>BACKUP REALIZADO: <span class="border-b border-black min-w-[150px] inline-block" id="out-backup-desc"></span></span>
+                                <span class="border border-black w-3 h-3 text-center leading-[10px] font-bold" id="out-chk-backup"></span>
+                            </div>
+                        </td>
+                        <td class="p-1">
+                            <div class="flex items-end justify-between text-[8px]">
+                                <span>DETALHAR / PATRIMÔNIO: <span class="border-b border-black min-w-[140px] inline-block" id="out-peri-1"></span></span>
+                                <span class="border border-black w-3 h-3 text-center leading-[10px] font-bold" id="out-chk-peri1"></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-1">
+                            <div class="flex items-end justify-between text-[8px]">
+                                <span>NOME PERFIL USUÁRIO: <span class="border-b border-black min-w-[150px] inline-block" id="out-perfil"></span></span>
+                                <span class="border border-black w-3 h-3 text-center leading-[10px] font-bold" id="out-chk-perfil"></span>
+                            </div>
+                        </td>
+                        <td class="p-1">
+                            <div class="flex items-end justify-between text-[8px]">
+                                <span>DETALHAR / PATRIMÔNIO: <span class="border-b border-black min-w-[140px] inline-block" id="out-peri-2"></span></span>
+                                <span class="border border-black w-3 h-3 text-center leading-[10px] font-bold" id="out-chk-peri2"></span>
                             </div>
                         </td>
                     </tr>
                 </table>
 
-                <div class="text-center py-4 font-bold text-[9px] relative uppercase">
-                    ASSINATURA DO TÉCNICO / RESPONSÁVEL: __________________________________________
-                    <img id="img-tecnico" class="preview-signature-top">
+                <div class="bg-[#C00000] text-white font-bold text-center py-0.5 border border-black uppercase text-[8px]">Validação Software de Gestão:</div>
+                <div class="border border-black border-top-0 flex justify-around items-center py-1 text-[8px] font-bold">
+                    <span>AIM [ <span id="out-chk-aim" class="w-3 inline-block text-center"></span> ]</span>
+                    <span>KACE [ <span id="out-chk-kace" class="w-3 inline-block text-center"></span> ]</span>
+                    <span>OUTROS [ <span id="out-chk-soft-out" class="w-3 inline-block text-center"></span> ]</span>
+                    <span class="flex-grow max-w-[40%] ml-2 border-b border-black">OBSERVAÇÕES: <span class="font-normal" id="out-soft-obs"></span></span>
                 </div>
 
-                <!-- DADOS CLIENTE -->
-                <div class="bg-[#C00000] text-white font-bold text-center py-1 border border-black uppercase text-[9px]">Dados do Cliente</div>
-                <table class="doc-table">
-                    <tr><td colspan="4" class="text-[9px]">RAZÃO SOCIAL / NOME FANTASIA: <span class="font-bold uppercase ml-2" id="out-razao"></span></td></tr>
-                    <tr><td colspan="4" class="text-[9px]">NOME DO RESPONSÁVEL: <span class="font-bold uppercase ml-2" id="out-resp"></span></td></tr>
-                    <tr>
-                        <td class="w-[100px] text-[9px]">TELEFONE:</td><td class="font-bold text-[9px]"><span id="out-tel"></span></td>
-                        <td class="w-[100px] text-[9px]">E-MAIL:</td><td class="font-bold text-[9px]"><span id="out-email"></span></td>
-                    </tr>
-                </table>
+                <div class="bg-[#C00000] text-white font-bold text-center py-1 border border-black mt-1 uppercase text-[9px]">Sintoma do Problema Relatado</div>
+                <div id="out-sintoma" class="lined-box min-h-[40px]"></div>
 
-                <!-- STATUS E TIPO -->
-                <div class="py-3 px-1 space-y-2 text-[9px]">
-                    <div class="flex justify-between items-center">
-                        <span class="font-bold">STATUS DO CHAMADO: <span id="out-status" class="text-[#C00000] ml-2 tracking-widest">---</span></span>
-                        <span>RETIRADO PARA LABORATÓRIO S/N: <span class="border-b border-black min-w-[100px] inline-block text-center font-bold" id="out-lab-sn"></span></span>
-                    </div>
-                    <div class="flex gap-8 items-center justify-center font-bold">
-                        <span>NOTEBOOK: [<span id="out-not"></span>]</span>
-                        <span>DESKTOP: [<span id="out-dsk"></span>]</span>
-                        <span>IMPRESSORA: [<span id="out-imp"></span>]</span>
-                        <span>MOBILE: [<span id="out-mob"></span>]</span>
-                    </div>
-                </div>
+                <div class="bg-[#C00000] text-white font-bold text-center py-1 border border-black mt-1 uppercase text-[9px]">Relatório Técnico - Fechamento</div>
+                <div id="out-fechamento" class="lined-box min-h-[260px] mb-2"></div>
 
-                <!-- EQUIPAMENTOS -->
-                <div class="bg-[#C00000] text-white font-bold text-center py-1 border border-black uppercase text-[9px]">Dados do (s) Equipamento (s)</div>
-                <table class="doc-table">
-                    <tr class="bg-[#C00000] text-white text-center text-[8px] font-bold">
-                        <td class="w-1/2 border border-black">EQUIPAMENTO ANTIGO</td><td class="w-1/2 border border-black">EQUIPAMENTO NOVO</td>
-                    </tr>
-                    <tr>
-                        <td>MODELO: <span class="font-bold uppercase ml-1" id="out-ant-mod"></span></td>
-                        <td>MODELO: <span class="font-bold uppercase ml-1" id="out-nov-mod"></span></td>
-                    </tr>
-                    <tr>
-                        <td>Nº PATRIMÔNIO: <span class="font-bold uppercase ml-1" id="out-ant-pat"></span></td>
-                        <td>Nº PATRIMÔNIO: <span class="font-bold uppercase ml-1" id="out-nov-pat"></span></td>
-                    </tr>
-                    <tr>
-                        <td>Nº SÉRIE: <span class="font-bold uppercase ml-1" id="out-ant-ser"></span></td>
-                        <td>Nº SÉRIE: <span class="font-bold uppercase ml-1" id="out-nov-ser"></span></td>
-                    </tr>
-                </table>
-
-                <!-- SINTOMA E FECHAMENTO -->
-                <div class="bg-[#C00000] text-white font-bold text-center py-1 border border-black mt-2 uppercase text-[9px]">Sintoma do Problema Relatado</div>
-                <div id="out-sintoma" class="lined-box min-h-[50px]"></div>
-
-                <div class="bg-[#C00000] text-white font-bold text-center py-1 border border-black mt-2 uppercase text-[9px]">Relatório Técnico - Fechamento</div>
-                <div id="out-fechamento" class="lined-box flex-grow"></div>
-
-                <!-- RODAPÉ -->
-                <div class="mt-4">
-                    <div class="flex flex-col items-center relative py-6">
-                        <div class="w-2/3 border-t border-black text-center text-[9px] font-bold pt-1 uppercase">Assinatura do Cliente / Responsável</div>
+                <div class="mt-auto flex flex-col items-center">
+                    <div class="w-full flex flex-col items-center relative py-4 mt-2">
                         <img id="img-cliente" class="preview-signature-bottom">
+                        <div class="w-[60%] border-t border-dashed border-black text-center text-[8px] font-bold pt-1 uppercase">
+                            Assinatura do Cliente / Responsável
+                        </div>
                     </div>
-                    <div class="text-center text-[#C00000] font-bold text-[9px] mt-1 italic uppercase border-t border-zinc-200 pt-2">Este documento é propriedade da ARKLOK</div>
+                    <div class="text-center text-[9px] font-bold mb-4 relative w-full">
+                        <span class="inline-block border-b border-black min-w-[150px]" id="out-cidade"></span>, 
+                        <span class="inline-block border-b border-black min-w-[30px]" id="out-dia"></span> DE 
+                        <span class="inline-block border-b border-black min-w-[120px]" id="out-mes"></span> DE 202<span id="out-ano"></span>
+                    </div>
+                    <div class="px-8 text-[7px] text-center leading-tight uppercase text-black/80 mb-2">
+                        ATENDIMENTO A LGPD: AO INSERIR SEUS DADOS ACIMA, VOCÊ ESTARÁ DE ACORDO COM A UTILIZAÇÃO DE SUAS INFORMAÇÕES ÚNICA E EXCLUSIVAMENTE PARA O PROCESSO DE ATENDIMENTO TÉCNICO DA ARKLOK. SEUS DADOS NÃO SERÃO PROCESSADOS E NEM DIVULGADOS PARA NENHUM OUTRO MEIO FORA O ESCLARECIDO ACIMA.
+                    </div>
+                    <div class="text-center text-[#C00000] font-bold text-[9px] italic border-t border-zinc-100 pt-1 w-full uppercase">
+                        Este documento é propriedade da ARKLOK, Todos os direitos são reservados
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL SCRIPT -->
+    <div id="modalScript" class="fixed inset-0 bg-black/95 z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-zinc-900 border border-red-600 w-full max-w-2xl p-6 shadow-[0_0_50px_rgba(220,38,38,0.3)]">
+            <div class="flex justify-between items-center mb-4 border-b border-zinc-800 pb-2">
+                <h3 class="text-red-600 font-black tracking-tighter">SCRIPT DE FECHAMENTO</h3>
+                <button onclick="fecharModal()" class="text-zinc-500 hover:text-white text-xl">&times;</button>
+            </div>
+            <textarea id="txtScript" readonly class="w-full h-80 bg-black border border-zinc-800 p-4 text-green-500 font-mono text-[11px] leading-relaxed focus:outline-none"></textarea>
+            <div class="grid grid-cols-2 gap-4 mt-6">
+                <button onclick="copiarScript()" class="bg-red-600 text-white font-black p-4 uppercase text-xs hover:bg-red-700 transition-all">COPIAR</button>
+                <button onclick="fecharModal()" class="bg-zinc-800 text-white font-black p-4 uppercase text-xs hover:bg-zinc-700 transition-all">FECHAR</button>
             </div>
         </div>
     </div>
