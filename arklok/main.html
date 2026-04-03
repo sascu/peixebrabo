@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PEIXE BRABO - RATS V5.0</title>
+    <title>RAT ARKLOK</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
@@ -17,16 +17,18 @@
     <div
         class="w-full lg:w-1/3 p-6 no-print tech-sidebar lg:h-full lg:overflow-y-auto border-r border-zinc-800 relative">
 
-        <!-- CABEÇALHO BRANDING -->
         <div class="mb-10 relative">
             <div class="flex items-center gap-4">
-                <div
-                    class="w-16 h-16 bg-red-600 flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.6)] shrink-0">
+                <!-- ÍCONE DO PEIXE COM LINK PARA A PASTA ANTERIOR -->
+                <a href="../main.html"
+                    class="w-16 h-16 bg-red-600 flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.6)] shrink-0 hover:bg-red-700 transition-all active:scale-95"
+                    title="Voltar para o Menu Principal">
                     <svg viewBox="0 0 24 24" class="w-10 h-10 fill-white">
                         <path
                             d="M21,12C21,12 18,5 11,5C10,5 5,7 3,9C2,10 2,11 3,12C2,13 2,14 3,15C5,17 10,19 11,19C18,19 21,12 21,12M17,12A1,1 0 0,1 16,13A1,1 0 0,1 15,12A1,1 0 0,1 16,11A1,1 0 0,1 17,12Z" />
                     </svg>
-                </div>
+                </a>
+
                 <div class="flex-grow">
                     <div class="flex items-center justify-between">
                         <h2 class="text-2xl font-black text-white uppercase leading-none tracking-tighter"
@@ -86,8 +88,15 @@
                 <div class="space-y-4 mt-4">
                     <div class="input-group"><label>RAZÃO SOCIAL</label><input type="text" id="in-razao"></div>
                     <div class="input-group"><label>ENDEREÇO DO LOCAL</label><input type="text" id="in-endereco"></div>
+                    <!-- NOVOS CAMPOS ABAIXO DO ENDEREÇO -->
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="input-group col-span-2"><label>CIDADE</label><input type="text" id="in-cidade">
+                        </div>
+                        <div class="input-group col-span-1"><label>ESTADO (UF)</label><input type="text" id="in-uf"
+                                placeholder="Ex: SP"></div>
+                    </div>
                     <div class="input-group"><label>RESPONSÁVEL</label><input type="text" id="in-resp"></div>
-                    <div class="input-group"><label>TELEFONE (ESPAÇO AMPLIADO)</label><input type="text" id="in-tel"
+                    <div class="input-group"><label>TELEFONE</label><input type="text" id="in-tel"
                             placeholder="(00) 00000-0000"></div>
                     <div class="input-group"><label>E-MAIL</label><input type="text" id="in-email"></div>
                     <div class="grid grid-cols-2 gap-4">
@@ -242,19 +251,6 @@
                 <div class="tech-card-header">SINTOMA_E_FECHAMENTO</div>
                 <div class="input-group mt-4"><label>SINTOMA</label><textarea id="in-sintoma" rows="2"></textarea></div>
                 <div class="input-group mt-2"><label>FECHAMENTO</label><textarea id="in-fechamento" rows="4"></textarea>
-                </div>
-            </div>
-
-            <!-- 08.1 DATA E LOCALIDADE -->
-            <div class="tech-card">
-                <div class="tech-num">08.1</div>
-                <div class="tech-card-header">DATA_LOCALIDADE</div>
-                <div class="grid grid-cols-2 gap-4 mt-4">
-                    <div class="input-group"><label>CIDADE</label><input type="text" id="in-cidade"></div>
-                    <div class="input-group"><label>DIA</label><input type="text" id="in-dia"></div>
-                    <div class="input-group"><label>MÊS</label><input type="text" id="in-mes"></div>
-                    <div class="input-group"><label>ANO (FINAL)</label><input type="text" id="in-ano"
-                            placeholder="Ex: 5"></div>
                 </div>
             </div>
 
