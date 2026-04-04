@@ -3,33 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PEIXE BRABO</title>
+    <title>PEIXE BRABO | CENTRAL</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Fonte de impacto para o Logo -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 </head>
-<body>
-    <!-- Efeito de linhas de scan (opcional, dá o clima hacker) -->
+<body class="dark-mode">
+    <!-- Camada de Emojis de fundo -->
+    <div class="emoji-bg" id="emoji-container"></div>
+    
     <div class="scanlines"></div>
+    
+    <div class="theme-switch" id="theme-toggle">
+        <div class="switch-dot"></div>
+        <span class="mode-label">CYBER MODE</span>
+    </div>
 
     <div class="container">
         <header>
-            <div class="logo-wrapper">
-                <h1 class="logo-text">PEIXE <span class="red-glitch">BRABO</span></h1>
-                <div class="status-bar">
-                    <span class="pulse"></span> SISTEMA CENTRAL OPERACIONAL
+            <div class="logo-inline">
+                <h1 class="logo-text">PEIXE <span class="accent-text">BRABO</span></h1>
+                <div class="fish-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M95,50 C80,20 40,20 10,40 C5,45 5,55 10,60 C40,80 80,80 95,50 Z M30,45 C32,45 35,47 35,50 C35,53 32,55 30,55 C28,55 25,53 25,50 C25,47 28,45 30,45 Z" fill="currentColor"/>
+                        <path d="M95,50 L80,40 L80,60 L95,50 Z" fill="currentColor" opacity="0.8"/>
+                    </svg>
                 </div>
+            </div>
+            <div class="status-panel">
+                <span class="pulse"></span>
+                <span>SISTEMA OPERACIONAL ATIVO</span>
             </div>
         </header>
 
         <main id="app-root">
-            <!-- Injetado pelo JS -->
+            <!-- JS injeta aqui -->
         </main>
 
         <footer>
             <div class="footer-content">
-                <p class="copyright">© 2026 DESENVOLVIDO POR PEIXE</p>
-                <p class="org">ORGANIZAÇÃO SEM FINS LUCRATIVOS</p>
+                <a href="https://www.linkedin.com/in/fabricionunesdeoliveira" target="_blank" class="dev-link">
+                    DESENVOLVIDO POR <span class="dev-name"> FABRICIO</span>
+                </a>
+                <p class="copyright">© 2026 PEIXE LABS / BRANCH 01</p>
             </div>
         </footer>
     </div>
