@@ -26,8 +26,26 @@ document.addEventListener('DOMContentLoaded', () => {
     [padAdmin, padTecnico].forEach((pad, index) => {
         const targetImgId = index === 0 ? 'img-admin' : 'img-tecnico';
         const canvas = index === 0 ? canvasAdmin : canvasTecnico;
+
         pad.addEventListener("endStroke", () => {
-            document.getElementById(targetImgId).src = getInvertedDataURL(canvas);
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+
+            // Se estiver no modo escuro, a caneta é branca. Precisamos converter para preto.
+            const isLight = document.body.classList.contains('light-mode');
+
+            tempCtx.drawImage(canvas, 0, 0);
+
+            if (!isLight) {
+                // Inverte Branco para Preto para o PDF
+                tempCtx.globalCompositeOperation = 'source-in';
+                tempCtx.fillStyle = 'black';
+                tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+            }
+
+            document.getElementById(targetImgId).src = tempCanvas.toDataURL();
         });
     });
 
@@ -48,11 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // 3. GERAÇÃO DE PDF - TÉCNICA DE ISOLAMENTO DE ELEMENTO
-    window.downloadPDF = function() {
+    window.downloadPDF = function () {
         const element = document.getElementById('rat-render');
         const numChamado = document.getElementById('in-chamado').value || '000';
         const btn = document.querySelector('.generate-btn');
-        
+
         btn.innerText = "GERANDO PDF...";
         btn.disabled = true;
 
@@ -61,9 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
             margin: 0,
             filename: `RAT_${numChamado}.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { 
-                scale: 2, 
-                useCORS: true, 
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
                 letterRendering: true,
                 width: 794, // Largura exata de um A4 em 96dpi
                 scrollX: 0,
@@ -92,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeCanvas();
 });
 
-window.toggleTheme = function() {
+window.toggleTheme = function () {
     const body = document.body;
     const icon = document.getElementById('theme-icon');
     body.classList.toggle('light-mode');
@@ -115,7 +133,7 @@ window.toggleTheme = function() {
 function getInverted(canvas, targetId) {
     const temp = document.createElement('canvas');
     const ctx = temp.getContext('2d');
-    temp.width = canvas.width; 
+    temp.width = canvas.width;
     temp.height = canvas.height;
     ctx.drawImage(canvas, 0, 0);
 
@@ -126,7 +144,7 @@ function getInverted(canvas, targetId) {
         ctx.globalCompositeOperation = 'source-in';
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, temp.width, temp.height);
-    } 
+    }
     // Se estiver no MODO LIGHT, a assinatura já é preta, só exportamos transparente
 
     document.getElementById(targetId).src = temp.toDataURL('image/png');

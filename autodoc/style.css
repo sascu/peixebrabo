@@ -174,3 +174,47 @@ body.light-mode .tech-sig-box::after { color: rgba(0, 0, 0, 0.05) !important; }
 body.light-mode .bg-zinc-900 { background-color: #e4e4e7 !important; }
 
 @media (max-width: 1023px) { body { height: auto !important; overflow: auto !important; } }
+
+body.light-mode .tech-sub-box {
+    background: #f1f1f1 !important;
+    border-color: #ddd !important;
+}
+
+body.light-mode .tech-row {
+    color: #333 !important;
+    border-bottom-color: #eee !important;
+}
+
+body.light-mode .tech-btns button {
+    background: #e4e4e7 !important;
+    color: #71717a !important;
+    border-color: #d4d4d8 !important;
+}
+
+body.light-mode .tech-btns button:focus {
+    background: #dc2626 !important;
+    color: white !important;
+}
+
+/* Cor das labels // TABLET e // CATRACA no modo claro */
+body.light-mode .tech-sub-box span.text-red-500 {
+    color: #b91c1c !important; /* Vermelho um pouco mais escuro para contraste */
+}
+
+/* --- CORREÇÃO DA ASSINATURA NO PDF --- */
+.preview-signature {
+    max-height: 50px; /* Reduzi um pouco para não subir muito */
+    max-width: 150px;
+    position: absolute;
+    left: 50px;      /* Move um pouco para a direita para sair de cima da palavra "Assinatura" */
+    bottom: 5px;     /* Ajusta a altura em relação à linha */
+    pointer-events: none;
+}
+
+/* Garante que o nome tenha espaço e não seja esmagado pela assinatura */
+#out-admin-nome, #out-tecnico-nome {
+    display: inline-block;
+    margin-bottom: 5px;
+    position: relative;
+    z-index: 1; /* Mantém o nome visualmente acima se houver colisão */
+}
