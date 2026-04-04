@@ -65,6 +65,24 @@ body.light-mode .tech-sig-box { background: #f9f9f9; border-color: #2563eb; }
 .tech-sidebar::-webkit-scrollbar-thumb, .preview-container::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
 
 @media (max-width: 1024px) { 
-    .preview-container { display: none !important; }
-    .tech-sidebar { width: 100% !important; border-right: none; }
+    body {
+        overflow-y: auto !important; /* Permite rolar a página para baixo */
+        height: auto !important;
+    }
+
+    .preview-container { 
+        display: flex !important; 
+        padding: 20px 10px !important;
+        background-color: #111 !important; /* Cor de fundo para destacar a folha */
+        overflow-x: auto; /* Permite ver o PDF inteiro deslizando para o lado se necessário */
+        justify-content: flex-start !important; /* Alinha à esquerda para não cortar */
+    }
+
+    #rat-render {
+        /* Isso impede que o PDF "encolha". Ele manterá o tamanho de uma folha */
+        min-width: 210mm; 
+        margin: 0 auto;
+        transform: scale(0.45); /* Diminui visualmente para caber na tela do celular */
+        transform-origin: top center;
+    }
 }
