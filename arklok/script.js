@@ -152,10 +152,21 @@ window.copiarScript = () => {
     navigator.clipboard.writeText(txt.value).then(() => alert("Copiado!"));
 };
 
-window.downloadPDF = function() {
+window.downloadPDF = function () {
     const element = document.getElementById('rat-render');
     const numChamado = document.getElementById('in-chamado').value || '000';
     const btn = document.querySelector('.generate-btn');
+
+    // 1. Salva o estilo original para não estragar sua visualização na 0
+    const originalStyle = element.style.cssText;
+
+    // 2. Força o elemento a ter o tamanho exato de um A4 e esconde sobras que criam a 2ª página
+    element.style.width = '794px';      // Largura padrão A4 (96dpi)
+    element.style.height = '1122px';    // Altura padrão A4 (96dpi)
+    element.style.overflow = 'hidden';  // Corta qualquer "respiro" que geraria a página 2
+    element.style.margin = '0';
+    element.style.padding = '0';
+
     btn.innerText = "GERANDO PDF...";
     btn.disabled = true;
 
@@ -163,12 +174,26 @@ window.downloadPDF = function() {
         margin: 0,
         filename: `RAT_${numChamado}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        html2canvas: {
+            scale: 2, // Mantém a qualidade alta
+            useCORS: true,
+            letterRendering: true,
+            scrollY: 0,
+            scrollX: 0
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        // Comando para ignorar qualquer tentativa de quebra de página
+        pagebreak: { mode: 'avoid-all' } 
     };
 
+    // 3. Gera o PDF e, ao finalizar, restaura o estilo original da página
     html2pdf().set(opt).from(element).save().then(() => {
-        btn.innerText = "GERAR PDF";
+        element.style.cssText = originalStyle; // Volta o layout ao que era antes
+        btn.innerText = "EXPORT_PDF_PRO";
+        btn.disabled = false;
+    }).catch(err => {
+        element.style.cssText = originalStyle; // Em caso de erro, também restaura
+        console.error(err);
         btn.disabled = false;
     });
 };
