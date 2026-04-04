@@ -15,6 +15,12 @@ const DATA = {
             sub: "GERADOR DE RAT AUTODOC",
             link: "arklok/main.html",
             status: "SISTEMA ATIVO"
+        },
+        {
+            nome: "RAT DELFIA",
+            sub: "GERADOR DE RAT DELFIA",
+            link: "delfia/main.html",
+            status: "SISTEMA ATIVO"
         }
     ],
     offline: ["SECURE_SHELL_01", "ENCRYPTED_DATA", "NULL_VOID"]
