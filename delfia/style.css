@@ -1,46 +1,100 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Roboto:wght@400;700;900&display=swap');
 
-/* RESET E ESTRUTURA */
+/* RESET E ESTRUTURA GLOBAL */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background-color: #0d0d0d; color: white; font-family: 'Space Mono', monospace; height: 100vh; overflow: hidden; }
+body { background-color: #0d0d0d; color: white; font-family: 'Space Mono', monospace; }
 
-/* SIDEBAR */
-.tech-sidebar { background-color: #0d0d0d; border-right: 1px solid #222; }
-.tech-card { background: rgba(255, 255, 255, 0.02); border: 1px solid #222; padding: 15px; position: relative; margin-top: 15px; }
-.tech-num { position: absolute; top: -10px; right: 10px; background: #2563eb; color: white; font-size: 10px; padding: 2px 8px; }
-.tech-card-header { color: #3b82f6; border-bottom: 1px solid #222; padding-bottom: 5px; font-weight: bold; font-size: 11px; }
-.tech-sidebar input, .tech-sidebar textarea { background: #000; border: 1px solid #333; color: #fff; font-size: 11px; padding: 8px; border-radius: 4px; width: 100%; }
-.tech-sidebar label { font-size: 9px; color: #555; display: block; margin-top: 5px; }
+/* SIDEBAR E CARDS (Padrão Autodoc aplicado ao Delfia) */
+.tech-sidebar {
+    background-color: #0d0d0d;
+    background-image: radial-gradient(circle at 1px 1px, #1a1a1a 1px, transparent 0);
+    background-size: 20px 20px;
+    border-right: 1px solid #222;
+}
+
+/* CONTROLE DE SCROLL (IDÊNTICO AO AUTODOC) */
+.scroll-area { 
+    height: 100vh; 
+    overflow-y: auto; 
+    scrollbar-width: none; 
+}
+.scroll-area::-webkit-scrollbar { display: none; }
+
+.tech-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid #222;
+    padding: 15px;
+    position: relative;
+    margin-top: 15px;
+}
+
+.tech-num { 
+    position: absolute; 
+    top: -10px; 
+    right: 10px; 
+    background: #2563eb; 
+    color: white; 
+    font-size: 10px; 
+    padding: 2px 8px; 
+    font-weight: bold;
+}
+
+.tech-card-header { 
+    color: #3b82f6; 
+    border-bottom: 1px solid #222; 
+    padding-bottom: 5px; 
+    font-weight: bold; 
+    font-size: 11px; 
+    letter-spacing: 1px;
+}
+
+.tech-sidebar input, .tech-sidebar textarea { 
+    background: #000; 
+    border: 1px solid #333; 
+    color: #fff; 
+    font-size: 11px; 
+    padding: 8px; 
+    width: 100%; 
+    font-family: 'Space Mono', monospace;
+}
+
+.tech-sidebar label { 
+    font-size: 8px; 
+    color: #666; 
+    display: block; 
+    margin-top: 5px; 
+    margin-bottom: 2px;
+}
 
 /* ASSINATURA UI */
-.tech-sig-box { background: #111; border: 1px solid #333; height: 100px; margin-top: 5px; position: relative; }
-.tech-sig-box::after { content: "ASSINE AQUI"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 10px; color: rgba(255,255,255,0.05); pointer-events: none; }
+.tech-sig-box { background: #000; border: 1px solid #222; height: 100px; margin-top: 5px; position: relative; }
+canvas { width: 100%; height: 100%; cursor: crosshair; }
 
-.generate-btn { background: #2563eb; width: 100%; padding: 16px; color: white; font-weight: bold; margin-top: 20px; cursor: pointer; border: none; }
+.generate-btn { 
+    background: #2563eb; 
+    width: 100%; 
+    padding: 16px; 
+    color: white; 
+    font-weight: bold; 
+    letter-spacing: 2px;
+    cursor: pointer; 
+    border: none; 
+}
 
-/* TEMA CLARO */
-body.light-mode { background-color: #f4f4f5; color: #18181b; }
-body.light-mode .tech-sidebar { background-color: #ffffff; border-right-color: #e4e4e7; }
-body.light-mode #ui-brand-title { color: #18181b; }
-body.light-mode .tech-card { background: #fdfdfd; border-color: #e4e4e7; }
-body.light-mode .tech-sidebar input, body.light-mode .tech-sidebar textarea { background: #fff; border-color: #d4d4d8; color: #18181b; }
-body.light-mode .tech-sig-box { background: #f9f9f9; border-color: #2563eb; }
-
-/* PDF (FIXO A4) */
+/* PDF - CONFIGURAÇÃO FIXA A4 */
 #rat-render { 
     width: 210mm; 
-    height: 296.5mm; /* Altura exata para evitar 2ª página */
+    height: 296.5mm; 
     padding: 10mm; 
     background: white; 
     color: black; 
     font-family: Arial, sans-serif; 
     font-size: 9.2px; 
     position: relative;
-    overflow: hidden; 
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
 }
 
 .pdf-header-final { display: flex; justify-content: space-between; align-items: center; border: 1.5px solid black; padding: 12px; margin-bottom: 8px; }
-.brand-delfia { font-family: 'Roboto'; font-weight: 900; font-size: 24px; letter-spacing: -1px; }
 .title-delfia { font-weight: bold; font-size: 11px; }
 
 .doc-table { width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed; }
@@ -50,7 +104,17 @@ body.light-mode .tech-sig-box { background: #f9f9f9; border-color: #2563eb; }
 .bg-light { background: #f9f9f9; }
 .h-5 { height: 18px; }
 
-.lined-paper { border: 1px solid black; border-top: none; height: 260px; background-image: linear-gradient(transparent 23px, #eee 24px); background-size: 100% 24px; line-height: 24px; padding: 0 10px; white-space: pre-wrap; font-size: 10px; }
+.lined-paper { 
+    border: 1px solid black; 
+    border-top: none; 
+    height: 260px; 
+    background-image: linear-gradient(transparent 23px, #eee 24px); 
+    background-size: 100% 24px; 
+    line-height: 24px; 
+    padding: 0 10px; 
+    white-space: pre-wrap; 
+    font-size: 10px; 
+}
 
 .vertical-label-stacked { background: #f0f0f0; text-align: center; font-weight: bold; font-size: 9px; width: 25px; line-height: 1.1; padding-top: 5px; border-right: 1px solid black; }
 .sig-field-pdf { border-bottom: 1px solid black; padding: 3px 6px; font-size: 8.5px; }
@@ -60,29 +124,30 @@ body.light-mode .tech-sig-box { background: #f9f9f9; border-color: #2563eb; }
 .btn-select { width: 100%; padding: 10px; border: 1px solid #333; color: #555; font-size: 10px; font-weight: bold; background: transparent; cursor: pointer; }
 .btn-select.active { background: #2563eb; color: white; border-color: #2563eb; }
 
-/* SCROLLBARS */
-.tech-sidebar::-webkit-scrollbar, .preview-container::-webkit-scrollbar { width: 4px; }
-.tech-sidebar::-webkit-scrollbar-thumb, .preview-container::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-
-@media (max-width: 1024px) { 
-    body {
-        overflow-y: auto !important; /* Permite rolar a página para baixo */
+/* CONFIGURAÇÃO MOBILE (O SEGREDO DO PROJETO 1) */
+@media (max-width: 1023px) { 
+    body { 
+        height: auto !important; 
+        overflow: auto !important; 
+    }
+    .scroll-area {
         height: auto !important;
+        overflow: visible !important;
     }
-
-    .preview-container { 
-        display: flex !important; 
-        padding: 20px 10px !important;
-        background-color: #111 !important; /* Cor de fundo para destacar a folha */
-        overflow-x: auto; /* Permite ver o PDF inteiro deslizando para o lado se necessário */
-        justify-content: flex-start !important; /* Alinha à esquerda para não cortar */
-    }
-
     #rat-render {
-        /* Isso impede que o PDF "encolha". Ele manterá o tamanho de uma folha */
-        min-width: 210mm; 
-        margin: 0 auto;
-        transform: scale(0.45); /* Diminui visualmente para caber na tela do celular */
-        transform-origin: top center;
+        margin: 20px auto;
+        /* Removido o scale para evitar bugs de visualização no celular */
+        width: 210mm; /* Mantém o tamanho real, usuário faz o pinch zoom se quiser */
+    }
+    .preview-container {
+        overflow-x: auto; /* Permite rolar pro lado se o PDF for maior que a tela */
+        justify-content: flex-start !important;
     }
 }
+
+/* MODO CLARO */
+body.light-mode { background-color: #f4f4f5; color: #18181b; }
+body.light-mode .tech-sidebar { background-color: #ffffff; border-right-color: #e4e4e7; }
+body.light-mode .tech-card { background: #fdfdfd; border-color: #e4e4e7; }
+body.light-mode .tech-sidebar input, body.light-mode .tech-sidebar textarea { background: #fff; border-color: #d4d4d8; color: #18181b; }
+body.light-mode .tech-sig-box { background: #f9f9f9; border-color: #2563eb; }

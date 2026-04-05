@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -10,308 +9,225 @@
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
+<body class="flex flex-col lg:flex-row min-h-screen transition-colors duration-300">
 
-<body class="flex flex-col lg:flex-row lg:h-screen lg:overflow-hidden transition-colors duration-300">
-
-    <!-- LADO ESQUERDO: FORMULÁRIO (Scroll Independente) -->
-    <aside class="w-full lg:w-1/3 h-full overflow-y-auto p-6 tech-sidebar no-print">
-        <div class="flex items-center justify-between mb-8">
+    <!-- LADO ESQUERDO: FORMULÁRIO (Igual à estrutura do Autodoc) -->
+    <div class="w-full lg:w-1/3 p-6 scroll-area no-print tech-sidebar">
+        <div class="mb-10 relative">
             <div class="flex items-center gap-4">
-                <div
-                    class="w-12 h-12 bg-blue-600 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(37,99,235,0.5)]">
-                    <a href="../main.html"
-                        class="w-12 h-12 bg-blue-600 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(37,99,235,0.5)] hover:bg-blue-700 transition-all active:scale-95"
-                        title="Voltar para o Menu Principal">
-                        <svg viewBox="0 0 24 24" class="w-8 h-8 fill-white">
-                            <path
-                                d="M21,12C21,12 18,5 11,5C10,5 5,7 3,9C2,10 2,11 3,12C2,13 2,14 3,15C5,17 10,19 11,19C18,19 21,12 21,12M17,12A1,1 0 0,1 16,13A1,1 0 0,1 15,12A1,1 0 0,1 16,11A1,1 0 0,1 17,12Z" />
-                        </svg>
-                    </a>
-                </div>
-                <div>
-                    <h2 class="text-xl font-black uppercase leading-none tracking-tighter" id="ui-brand-title">PEIXE
-                        BRABO <span class="text-blue-500">RATS</span></h2>
-                    <p class="text-[10px] uppercase font-bold mt-1 opacity-50">Gerador de rat delfia</p>
+                <a href="../main.html"
+                    class="w-16 h-16 bg-blue-600 flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.6)] shrink-0 hover:bg-blue-700 transition-all active:scale-95"
+                    title="Voltar para o Menu Principal">
+                    <svg viewBox="0 0 24 24" class="w-10 h-10 fill-white">
+                        <path d="M21,12C21,12 18,5 11,5C10,5 5,7 3,9C2,10 2,11 3,12C2,13 2,14 3,15C5,17 10,19 11,19C18,19 21,12 21,12M17,12A1,1 0 0,1 16,13A1,1 0 0,1 15,12A1,1 0 0,1 16,11A1,1 0 0,1 17,12Z" />
+                    </svg>
+                </a>
+        
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-2xl font-black text-white uppercase leading-none tracking-tighter" id="brand-title">
+                            PEIXE BRABO <span class="text-blue-500">RATS</span>
+                        </h2>
+                        <button type="button" onclick="toggleTheme()" id="theme-btn"
+                            class="p-2 hover:bg-zinc-800/50 rounded-full transition-all">
+                            <svg id="theme-icon" viewBox="0 0 24 24" class="w-6 h-6 fill-yellow-500">
+                                <path d="M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42L18.35,4.65L17.58,8.61L21,11L17.58,13.39L18.35,17.35L14.39,16.58L12,20L9.61,16.58L5.65,17.35L6.42,13.39L3,11L6.42,8.61L5.65,4.65L9.61,5.42L12,2Z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <p class="text-[10px] text-zinc-500 mt-1 uppercase font-bold tracking-[0.2em]">GERADOR DE RAT DELFIA</p>
                 </div>
             </div>
-            <button type="button" onclick="toggleTheme()" class="p-2 rounded-full hover:bg-zinc-800/50 transition-all">
-                <svg id="theme-icon" viewBox="0 0 24 24" class="w-6 h-6 fill-yellow-500">
-                    <path
-                        d="M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42L18.35,4.65L17.58,8.61L21,11L17.58,13.39L18.35,17.35L14.39,16.58L12,20L9.61,16.58L5.65,17.35L6.42,13.39L3,11L6.42,8.61L5.65,4.65L9.61,5.42L12,2Z" />
-                </svg>
-            </button>
+            <div class="mt-5 h-[2px] w-full bg-gradient-to-r from-blue-600 via-blue-600 to-transparent"></div>
         </div>
-
+        
         <form id="rat-form" class="space-y-6 pb-10">
             <div class="tech-card">
                 <div class="tech-num">01</div>
                 <div class="tech-card-header">IDENTIFICAÇÃO</div>
-                <div class="grid grid-cols-2 gap-2 mt-3">
-                    <div class="col-span-2"><label>CLIENTE</label><input type="text" id="in-cliente"></div>
-                    <div><label>DATA</label><input type="date" id="in-data"></div>
-                    <div><label>Nº CHAMADO</label><input type="text" id="in-chamado"></div>
-                    <div class="col-span-2"><label>ENDEREÇO</label><input type="text" id="in-endereco"></div>
-                    <div><label>CIDADE/UF</label><input type="text" id="in-cidade"></div>
-                    <div><label>TELEFONE</label><input type="text" id="in-telefone"></div>
-                    <div class="col-span-2"><label>SOLICITANTE</label><input type="text" id="in-solicitante"></div>
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <div class="col-span-2"><input type="text" id="in-cliente" placeholder="CLIENTE"></div>
+                    <div class="input-container"><label>DATA</label><input type="date" id="in-data"></div>
+                    <div class="input-container"><label>Nº CHAMADO</label><input type="text" id="in-chamado"></div>
+                    <div class="col-span-2"><input type="text" id="in-endereco" placeholder="ENDEREÇO"></div>
+                    <input type="text" id="in-cidade" placeholder="CIDADE/UF">
+                    <input type="text" id="in-telefone" placeholder="TELEFONE">
+                    <div class="col-span-2"><input type="text" id="in-solicitante" placeholder="SOLICITANTE"></div>
                 </div>
             </div>
 
             <div class="tech-card">
                 <div class="tech-num">02</div>
                 <div class="tech-card-header">TIPO ATENDIMENTO</div>
-                <div class="grid grid-cols-2 gap-2 mt-3">
-                    <button type="button" onclick="setAtendimento('Instalação', this)"
-                        class="btn-select active">INSTALAÇÃO</button>
-                    <button type="button" onclick="setAtendimento('Manutenção', this)"
-                        class="btn-select">MANUTENÇÃO</button>
+                <div class="grid grid-cols-2 gap-2 mt-4">
+                    <button type="button" onclick="setAtendimento('Instalação', this)" class="btn-select active">INSTALAÇÃO</button>
+                    <button type="button" onclick="setAtendimento('Manutenção', this)" class="btn-select">MANUTENÇÃO</button>
                 </div>
             </div>
 
             <div class="tech-card">
                 <div class="tech-num">03</div>
                 <div class="tech-card-header">EQUIPAMENTOS</div>
-                <div class="space-y-2 mt-3">
-                    <div class="grid grid-cols-3 gap-1"><input type="text" placeholder="Mod"
-                            oninput="updateTable('eq', 0, 0, this.value)"><input type="text" placeholder="Série"
-                            oninput="updateTable('eq', 0, 2, this.value)"><input type="text" placeholder="Sit"
-                            oninput="updateTable('eq', 0, 4, this.value)"></div>
-                    <div class="grid grid-cols-3 gap-1"><input type="text" placeholder="Mod"
-                            oninput="updateTable('eq', 1, 0, this.value)"><input type="text" placeholder="Série"
-                            oninput="updateTable('eq', 1, 2, this.value)"><input type="text" placeholder="Sit"
-                            oninput="updateTable('eq', 1, 4, this.value)"></div>
-                    <div class="grid grid-cols-3 gap-1"><input type="text" placeholder="Mod"
-                            oninput="updateTable('eq', 2, 0, this.value)"><input type="text" placeholder="Série"
-                            oninput="updateTable('eq', 2, 2, this.value)"><input type="text" placeholder="Sit"
-                            oninput="updateTable('eq', 2, 4, this.value)"></div>
-                    <div class="grid grid-cols-3 gap-1"><input type="text" placeholder="Mod"
-                            oninput="updateTable('eq', 3, 0, this.value)"><input type="text" placeholder="Série"
-                            oninput="updateTable('eq', 3, 2, this.value)"><input type="text" placeholder="Sit"
-                            oninput="updateTable('eq', 3, 4, this.value)"></div>
+                <div class="space-y-2 mt-4">
+                    <div class="grid grid-cols-3 gap-1"><input type="text" placeholder="Mod" oninput="updateTable('eq', 0, 0, this.value)"><input type="text" placeholder="Série" oninput="updateTable('eq', 0, 2, this.value)"><input type="text" placeholder="Sit" oninput="updateTable('eq', 0, 4, this.value)"></div>
+                    <div class="grid grid-cols-3 gap-1"><input type="text" placeholder="Mod" oninput="updateTable('eq', 1, 0, this.value)"><input type="text" placeholder="Série" oninput="updateTable('eq', 1, 2, this.value)"><input type="text" placeholder="Sit" oninput="updateTable('eq', 1, 4, this.value)"></div>
+                    <div class="grid grid-cols-3 gap-1"><input type="text" placeholder="Mod" oninput="updateTable('eq', 2, 0, this.value)"><input type="text" placeholder="Série" oninput="updateTable('eq', 2, 2, this.value)"><input type="text" placeholder="Sit" oninput="updateTable('eq', 2, 4, this.value)"></div>
+                    <div class="grid grid-cols-3 gap-1"><input type="text" placeholder="Mod" oninput="updateTable('eq', 3, 0, this.value)"><input type="text" placeholder="Série" oninput="updateTable('eq', 3, 2, this.value)"><input type="text" placeholder="Sit" oninput="updateTable('eq', 3, 4, this.value)"></div>
                 </div>
             </div>
 
             <div class="tech-card">
                 <div class="tech-num">04</div>
                 <div class="tech-card-header">MATERIAIS</div>
-                <div class="space-y-2 mt-3">
-                    <div class="grid grid-cols-4 gap-1"><input type="text" placeholder="Material" class="col-span-3"
-                            oninput="updateTable('mat', 0, 0, this.value)"><input type="text" placeholder="Qtd"
-                            oninput="updateTable('mat', 0, 1, this.value)"></div>
-                    <div class="grid grid-cols-4 gap-1"><input type="text" placeholder="Material" class="col-span-3"
-                            oninput="updateTable('mat', 1, 0, this.value)"><input type="text" placeholder="Qtd"
-                            oninput="updateTable('mat', 1, 1, this.value)"></div>
-                    <div class="grid grid-cols-4 gap-1"><input type="text" placeholder="Material" class="col-span-3"
-                            oninput="updateTable('mat', 2, 0, this.value)"><input type="text" placeholder="Qtd"
-                            oninput="updateTable('mat', 2, 1, this.value)"></div>
-                    <div class="grid grid-cols-4 gap-1"><input type="text" placeholder="Material" class="col-span-3"
-                            oninput="updateTable('mat', 3, 0, this.value)"><input type="text" placeholder="Qtd"
-                            oninput="updateTable('mat', 3, 1, this.value)"></div>
+                <div class="space-y-2 mt-4">
+                    <div class="grid grid-cols-4 gap-1"><input type="text" placeholder="Material" class="col-span-3" oninput="updateTable('mat', 0, 0, this.value)"><input type="text" placeholder="Qtd" oninput="updateTable('mat', 0, 1, this.value)"></div>
+                    <div class="grid grid-cols-4 gap-1"><input type="text" placeholder="Material" class="col-span-3" oninput="updateTable('mat', 1, 0, this.value)"><input type="text" placeholder="Qtd" oninput="updateTable('mat', 1, 1, this.value)"></div>
+                    <div class="grid grid-cols-4 gap-1"><input type="text" placeholder="Material" class="col-span-3" oninput="updateTable('mat', 2, 0, this.value)"><input type="text" placeholder="Qtd" oninput="updateTable('mat', 2, 1, this.value)"></div>
+                    <div class="grid grid-cols-4 gap-1"><input type="text" placeholder="Material" class="col-span-3" oninput="updateTable('mat', 3, 0, this.value)"><input type="text" placeholder="Qtd" oninput="updateTable('mat', 3, 1, this.value)"></div>
                 </div>
             </div>
 
             <div class="tech-card">
                 <div class="tech-num">05</div>
                 <div class="tech-card-header">LAUDO E HORÁRIOS</div>
-                <textarea id="in-resumo" rows="3" class="mt-2" placeholder="Descreva o serviço..."></textarea>
-                <div class="grid grid-cols-2 gap-2 mt-2">
-                    <div><label>INÍCIO</label><input type="time" id="in-inicio"></div>
-                    <div><label>FIM</label><input type="time" id="in-fim"></div>
-                    <div><label>SUPORTE</label><input type="text" id="in-suporte"></div>
-                    <div><label>SENHA</label><input type="text" id="in-senha"></div>
+                <textarea id="in-resumo" rows="4" class="mt-4" placeholder="Descreva o serviço..."></textarea>
+                <div class="grid grid-cols-2 gap-3 mt-2">
+                    <div class="input-container"><label>INÍCIO</label><input type="time" id="in-inicio"></div>
+                    <div class="input-container"><label>FIM</label><input type="time" id="in-fim"></div>
+                    <div class="input-container"><label>SUPORTE</label><input type="text" id="in-suporte"></div>
+                    <div class="input-container"><label>SENHA</label><input type="text" id="in-senha"></div>
                 </div>
             </div>
 
             <div class="tech-card">
                 <div class="tech-num">06</div>
-                <div class="tech-card-header">ASSINATURAS</div>
-                <div class="space-y-4 mt-3">
+                <div class="tech-card-header">AUTENTICAÇÃO</div>
+                <div class="space-y-4 mt-4">
                     <div>
-                        <label class="text-blue-500 font-bold uppercase">Cliente</label>
-                        <input type="text" id="in-cli-nome" placeholder="Nome Legível" class="mb-1">
-                        <input type="text" id="in-cli-rg" placeholder="RG ou Matrícula" class="mb-1">
-                        <input type="text" id="in-cli-tel" placeholder="Telefone / Celular" class="mb-1">
+                        <label class="input-label text-blue-500">CLIENTE</label>
+                        <input type="text" id="in-cli-nome" placeholder="NOME LEGÍVEL" class="mb-1">
+                        <input type="text" id="in-cli-rg" placeholder="RG OU MATRÍCULA" class="mb-1">
+                        <input type="text" id="in-cli-tel" placeholder="TELEFONE" class="mb-1">
                         <div class="tech-sig-box"><canvas id="pad-cliente"></canvas></div>
-                        <button type="button" onclick="clearSignature(padCliente, 'img-cli')"
-                            class="text-[9px] underline opacity-50">Limpar</button>
+                        <button type="button" onclick="clearSignature(padCliente, 'img-cli')" class="text-[7px] text-gray-500 underline mt-1">LIMPAR</button>
                     </div>
                     <div>
-                        <label class="text-blue-500 font-bold uppercase">Prestador</label>
-                        <input type="text" id="in-pre-nome" placeholder="Nome Legível" class="mb-1">
-                        <input type="text" id="in-pre-rg" placeholder="RG ou Matrícula" class="mb-1">
-                        <input type="text" id="in-pre-tel" placeholder="Telefone / Celular" class="mb-1">
+                        <label class="input-label text-blue-500">PRESTADOR</label>
+                        <input type="text" id="in-pre-nome" placeholder="NOME LEGÍVEL" class="mb-1">
+                        <input type="text" id="in-pre-rg" placeholder="RG OU MATRÍCULA" class="mb-1">
+                        <input type="text" id="in-pre-tel" placeholder="TELEFONE" class="mb-1">
                         <div class="tech-sig-box"><canvas id="pad-prestador"></canvas></div>
-                        <button type="button" onclick="clearSignature(padPrestador, 'img-pre')"
-                            class="text-[9px] underline opacity-50">Limpar</button>
+                        <button type="button" onclick="clearSignature(padPrestador, 'img-pre')" class="text-[7px] text-gray-500 underline mt-1">LIMPAR</button>
                     </div>
                 </div>
             </div>
 
             <button type="button" onclick="downloadPDF()" class="generate-btn">GERAR RELATÓRIO PDF</button>
         </form>
-    </aside>
+    </div>
 
-    <!-- LADO DIREITO: PREVIEW (Scroll Independente) -->
-    <main class="flex w-full lg:w-2/3 h-auto lg:h-full overflow-y-auto bg-zinc-900 p-4 lg:p-8 justify-center preview-container">
+    <!-- LADO DIREITO: PREVIEW (Igual à estrutura do Autodoc) -->
+    <div class="w-full lg:w-2/3 p-4 flex justify-center scroll-area bg-[#0a0a0a] preview-container">
         <div id="rat-render">
-            <div class="pdf-header-final">
-                <div class="brand-delfia">
-                    <img src="logo-delfia.png" alt="Logo" style="height: 35px; width: auto;">
-                </div>
+    <!-- Cabeçalho Triplo -->
+    <div class="pdf-header-final">
+        <div class="brand-delfia"><img src="logo-delfia.png" style="height: 35px; width: auto;"></div>
                 <div class="title-delfia">RELATÓRIO TÉCNICO</div>
-                <div class="brand-delfia">
-                    <img src="logo-delfia.png" alt="Logo" style="height: 35px; width: auto;">
-                </div>
-            </div>
+                <div class="brand-delfia"><img src="logo-delfia.png" style="height: 35px; width: auto;"></div>
+    </div>
 
-            <table class="doc-table">
-                <tr>
-                    <td colspan="4" class="gray-bar uppercase">INDENTIFICAÇÃO</td>
-                </tr>
-                <tr>
-                    <td class="bold w-15">Cliente:</td>
-                    <td class="w-35" id="out-cliente"></td>
-                    <td class="bold w-15">Data:</td>
-                    <td id="out-data"></td>
-                </tr>
-                <tr>
-                    <td class="bold">Número do Chamado:</td>
-                    <td id="out-chamado"></td>
-                    <td class="bold">Código da Agência:</td>
-                    <td id="out-agencia"></td>
-                </tr>
-                <tr>
-                    <td class="bold">Endereço:</td>
-                    <td id="out-endereco"></td>
-                    <td class="bold">Cidade/UF:</td>
-                    <td id="out-cidade"></td>
-                </tr>
-                <tr>
-                    <td class="bold">Nome do solicitante:</td>
-                    <td id="out-solicitante"></td>
-                    <td class="bold">Telefone:</td>
-                    <td id="out-telefone"></td>
-                </tr>
-            </table>
+    <!-- Identificação -->
+    <table class="doc-table">
+        <tr><td colspan="4" class="gray-bar uppercase">INDENTIFICAÇÃO</td></tr>
+        <tr>
+            <td class="bold w-15">Cliente:</td><td class="w-35" id="out-cliente"></td>
+            <td class="bold w-15">Data:</td><td id="out-data"></td>
+        </tr>
+        <tr>
+            <td class="bold">Número do Chamado:</td><td id="out-chamado"></td>
+            <td class="bold">Código da Agência:</td><td id="out-agencia"></td>
+        </tr>
+        <tr>
+            <td class="bold">Endereço:</td><td id="out-endereco"></td>
+            <td class="bold">Cidade/UF:</td><td id="out-cidade"></td>
+        </tr>
+        <tr>
+            <td class="bold">Nome do solicitante:</td><td id="out-solicitante"></td>
+            <td class="bold">Telefone:</td><td id="out-telefone"></td>
+        </tr>
+    </table>
 
-            <table class="doc-table no-top">
-                <tr>
-                    <td class="gray-bar uppercase">TIPO DE ATENDIMENTO</td>
-                </tr>
-                <tr>
-                    <td class="text-center py-1 font-bold" id="out-tipo-atendimento">(X) INSTALAÇÃO
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ( ) MANUTENÇÃO</td>
-                </tr>
-            </table>
+    <!-- Tipo de Atendimento -->
+    <table class="doc-table no-top">
+        <tr><td class="gray-bar uppercase">TIPO DE ATENDIMENTO</td></tr>
+        <tr>
+            <td class="text-center py-1 font-bold" id="out-tipo-atendimento">
+                ( ) Instalação &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ( ) Manutenção
+            </td>
+        </tr>
+    </table>
 
-            <table class="doc-table no-top" id="pdf-table-eq">
-                <tr>
-                    <td colspan="5" class="gray-bar uppercase">EQUIPAMENTOS ENVOLVIDOS</td>
-                </tr>
-                <tr class="text-center bold bg-light" style="font-size: 8px;">
-                    <td>Marca/Modelo</td>
-                    <td>Tipo</td>
-                    <td>Série</td>
-                    <td>Patrimônio</td>
-                    <td>Situação</td>
-                </tr>
-                <tr class="h-5">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="h-5">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="h-5">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="h-5">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
+    <!-- Equipamentos -->
+    <table class="doc-table no-top" id="pdf-table-eq">
+        <tr><td colspan="5" class="gray-bar uppercase">EQUIPAMENTOS ENVOLVIDOS</td></tr>
+        <tr class="text-center bold" style="font-size: 8px; background: #eee;">
+            <td>Marca/Modelo</td><td>Tipo</td><td>Número de Série</td><td>Patrimônio</td><td>Situação</td>
+        </tr>
+        <tr class="h-5"><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr class="h-5"><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr class="h-5"><td></td><td></td><td></td><td></td><td></td></tr>
+    </table>
 
-            <table class="doc-table no-top" id="pdf-table-mat">
-                <tr>
-                    <td colspan="2" class="gray-bar uppercase">MATERIAL UTILIZADO</td>
-                </tr>
-                <tr class="text-center bold bg-light" style="font-size: 8px;">
-                    <td class="w-60">Material</td>
-                    <td>Quantidade / Metragem</td>
-                </tr>
-                <tr class="h-5">
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="h-5">
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="h-5">
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="h-5">
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
+    <!-- Material -->
+    <table class="doc-table no-top" id="pdf-table-mat">
+        <tr><td colspan="2" class="gray-bar uppercase">MATERIAL UTILIZADO</td></tr>
+        <tr class="text-center bold" style="font-size: 8px; background: #eee;">
+            <td class="w-60">Material</td><td>Quantidade / Metragem</td>
+        </tr>
+        <tr class="h-5"><td></td><td></td></tr>
+        <tr class="h-5"><td></td><td></td></tr>
+    </table>
 
-            <div class="gray-bar border-x border-black py-1 uppercase"
-                style="border-top: 1px solid black; font-size: 9px;">CONSIDERAÇÕES GERAIS – LAUDO TÉCNICO</div>
-            <div class="lined-paper" id="out-resumo"></div>
+    <!-- Laudo -->
+    <div class="gray-bar border-x border-black py-1 uppercase" style="border-top: 1px solid black; font-size: 9px; border-left: 1px solid black; border-right: 1px solid black;">
+        CONSIDERAÇÕES GERAIS – LAUDO TÉCNICO – RESUMO DO ATENDIMENTO
+    </div>
+    <div class="lined-paper" id="out-resumo"></div>
 
-            <table class="doc-table no-top">
-                <tr>
-                    <td class="bold gray-bar w-15">Horário – Início:</td>
-                    <td class="w-35" id="out-inicio"></td>
-                    <td class="bold gray-bar w-15">Horário – Término:</td>
-                    <td class="w-35" id="out-fim"></td>
-                </tr>
-                <tr>
-                    <td class="bold gray-bar w-15">SUPORTE:</td>
-                    <td class="w-35" id="out-suporte"></td>
-                    <td class="bold gray-bar w-15">SENHA:</td>
-                    <td class="w-35" id="out-senha"></td>
-                </tr>
-            </table>
+    <!-- Horários e Suporte -->
+    <table class="doc-table no-top">
+        <tr>
+            <td class="bold gray-bar w-15" style="text-align: left;">Horário – Início:</td><td class="w-35" id="out-inicio"></td>
+            <td class="bold gray-bar w-15" style="text-align: left;">Término:</td><td class="w-35" id="out-fim"></td>
+        </tr>
+        <tr>
+            <td class="bold gray-bar w-15" style="text-align: left;">SUPORTE:</td><td class="w-35" id="out-suporte"></td>
+            <td class="bold gray-bar w-15" style="text-align: left;">SENHA:</td><td class="w-35" id="out-senha"></td>
+        </tr>
+    </table>
 
-            <table class="doc-table no-top">
-                <tr>
-                    <td class="vertical-label-stacked">C<br>L<br>I<br>E<br>N<br>T<br>E</td>
-                    <td style="padding: 0; width: 45%;">
-                        <div class="sig-field-pdf"><b>NOME LEGÍVEL:</b> <span id="out-cli-nome"></span></div>
-                        <div class="sig-field-pdf"><b>RG OU MATRÍCULA:</b> <span id="out-cli-rg"></span></div>
-                        <div class="sig-field-pdf"><b>TELEFONE/CELULAR:</b> <span id="out-cli-tel"></span></div>
-                        <div class="sig-area-pdf"><b>ASSINATURA:</b> <img id="img-cli" class="render-sig-img"></div>
-                    </td>
-                    <td class="vertical-label-stacked">P<br>R<br>E<br>S<br>T<br>A<br>D<br>O<br>R</td>
-                    <td style="padding: 0; width: 45%;">
-                        <div class="sig-field-pdf"><b>NOME LEGÍVEL:</b> <span id="out-pre-nome"></span></div>
-                        <div class="sig-field-pdf"><b>RG OU MATRÍCULA:</b> <span id="out-pre-rg"></span></div>
-                        <div class="sig-field-pdf"><b>TELEFONE/CELULAR:</b> <span id="out-pre-tel"></span></div>
-                        <div class="sig-area-pdf"><b>ASSINATURA:</b> <img id="img-pre" class="render-sig-img"></div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </main>
+    <!-- Assinaturas -->
+    <table class="doc-table no-top">
+        <tr>
+            <td class="vertical-label-stacked">C<br>L<br>I<br>E<br>N<br>T<br>E</td>
+            <td style="padding: 0; width: 45%;">
+                <div class="sig-field-pdf"><b>NOME LEGÍVEL:</b> <span id="out-cli-nome"></span></div>
+                <div class="sig-field-pdf"><b>RG OU MATRÍCULA:</b> <span id="out-cli-rg"></span></div>
+                <div class="sig-field-pdf"><b>TELEFONE E/OU CELULAR:</b> <span id="out-cli-tel"></span></div>
+                <div class="sig-area-pdf"><b>ASSINATURA E CARIMBO:</b> <img id="img-cli" class="render-sig-img"></div>
+            </td>
+            <td class="vertical-label-stacked">P<br>R<br>E<br>S<br>T<br>A<br>D<br>O<br>R</td>
+            <td style="padding: 0; width: 45%;">
+                <div class="sig-field-pdf"><b>NOME LEGÍVEL:</b> <span id="out-pre-nome"></span></div>
+                <div class="sig-field-pdf"><b>RG OU MATRÍCULA:</b> <span id="out-pre-rg"></span></div>
+                <div class="sig-field-pdf"><b>TELEFONE E/OU CELULAR:</b> <span id="out-pre-tel"></span></div>
+                <div class="sig-area-pdf"><b>ASSINATURA:</b> <img id="img-pre" class="render-sig-img"></div>
+            </td>
+        </tr>
+    </table>
+</div>
+    </div>
 
     <script src="script.js"></script>
 </body>
-
 </html>
