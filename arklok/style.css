@@ -267,5 +267,64 @@ body.light-mode .tech-sig-box {
 .no-print { display: block; }
 @media print { .no-print { display: none; } }
 
+@media (max-width: 1023px) { 
+    body { 
+        height: auto !important; 
+        overflow: visible !important; 
+    }
+
+    /* O formulário flui naturalmente para baixo */
+    .tech-sidebar {
+        height: auto !important;
+        overflow: visible !important;
+        border-right: none;
+    }
+
+    /* Container do Preview (lado direito) */
+    .w-full.lg\:w-2\/3 {
+        height: auto !important;
+        overflow: visible !important;
+        padding: 10px !important;
+        background-color: #111 !important;
+    }
+
+    /* O SEGREDO: Remove o tamanho fixo de A4 no mobile e deixa fluir */
+    #rat-render {
+        width: 100% !important;   /* Ocupa a largura total do celular */
+        max-width: 100% !important;
+        min-width: unset !important;
+        height: auto !important;    /* Altura cresce conforme o conteúdo */
+        min-height: unset !important;
+        padding: 15px !important;   /* Menos respiro nas bordas */
+        transform: none !important; /* Remove qualquer encolhimento */
+        margin: 0 auto !important;
+        box-shadow: none !important;
+    }
+
+    /* Ajuste do container interno para não vazar */
+    #rat-border-container {
+        border: 1px solid black !important;
+        padding: 5px !important;
+    }
+
+    /* Ajusta as caixas de texto para não ficarem gigantes no celular */
+    .lined-box {
+        min-height: 80px !important;
+        font-size: 11px !important;
+    }
+
+    /* Diminui um pouco as tabelas para caberem sem scroll */
+    .doc-table td {
+        padding: 2px 4px !important;
+        font-size: 8px !important;
+    }
+
+    /* Assinaturas ficam uma embaixo da outra se necessário (opcional) */
+    .preview-signature-bottom {
+        height: 25px !important;
+        bottom: 25px !important;
+    }
+}
+
 
 
